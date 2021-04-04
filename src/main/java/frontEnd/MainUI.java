@@ -2,8 +2,9 @@ package frontEnd;
 
 
 import java.awt.BorderLayout;
-
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -153,8 +154,16 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
 	public void launchMainUI() {
 		JFrame frame = this;
-		frame.setSize(900, 600);
-		frame.pack();
+		
+		// edit these values to resize window accordingly
+		frame.setSize(1220, 800);
+//		frame.setResizable(false);
+		
+		// centers the screen
+		frame.setLocationRelativeTo(null);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.pack(); // messes up the centering
 		frame.setVisible(true);
 	}
 

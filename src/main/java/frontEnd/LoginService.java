@@ -1,7 +1,11 @@
 package frontEnd;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -87,7 +91,8 @@ public class LoginService extends JFrame implements LoginCreds {
 		    }
 		});
 		panel.add(submit);
-		
+
+		getRootPane().setDefaultButton(submit);
 		getContentPane().add(panel);
 		
 	}
@@ -105,6 +110,9 @@ public class LoginService extends JFrame implements LoginCreds {
 		valid = verifyLogin.checkPin(username, password);
 		
 		if (valid) {
+			JFrame frame = LoginService.getInstance();
+			frame.setVisible(false);
+			frame.dispose();
 			MainUI launch = new MainUI();
 			launch.launchMainUI();
 		}
@@ -123,6 +131,7 @@ public class LoginService extends JFrame implements LoginCreds {
 		JFrame frame = LoginService.getInstance();
 		frame.setSize(335, 120);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
