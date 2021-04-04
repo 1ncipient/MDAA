@@ -49,7 +49,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     /**
     Constructor
     */
-	private MainUI() {
+	public MainUI() {
 		// Set window title
 		super("Country Statistics");
 		populator = new Populator();
@@ -167,7 +167,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             int min = startYears[indexOf(analysisSelected, analysisTypes)];
             int max = endYears[indexOf(analysisSelected, analysisTypes)];
             if (selected < min || selected > max) {
-            	errorMsg("Please select another start year");
+            	errorMsg("Please select another start year, current year not valid.");
             }
             else {
             	populator.setSelectionType("startYr", selected);
@@ -181,7 +181,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             int min = startYears[indexOf(analysisSelected, analysisTypes)];
             int max = endYears[indexOf(analysisSelected, analysisTypes)];
             if (selected < min || selected > max) {
-            	errorMsg("Please select another end year");
+            	errorMsg("Please select another end year, current year not valid");
             }
             else {
             	populator.setSelectionType("endYr", selected);
@@ -198,25 +198,40 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             	if (checkViewer(0,"add")) {
             		populator.setSelectionType(viewerList, 0);
             	}
+            	else {
+            		errorMsg("Failed adding viewer. Already Added");
+            	}
             }
             else if (selected.equals("Line Chart")){
             	if (checkViewer(1,"add")) {
             		populator.setSelectionType(viewerList, 1);
+            	}
+            	else {
+            		errorMsg("Failed adding viewer. Already Added");
             	}
             }
             else if (selected.equals("Bar Chart")){
             	if (checkViewer(2,"add")) {
             		populator.setSelectionType(viewerList, 2);
             	}
+            	else {
+            		errorMsg("Failed adding viewer. Already Added");
+            	}
             }
             else if (selected.equals("Scatter Chart")){
             	if (checkViewer(3,"add")) {
             		populator.setSelectionType(viewerList, 3);
             	}
+            	else {
+            		errorMsg("Failed adding viewer. Already Added");
+            	}
             }
             else {
             	if (checkViewer(4,"add")) {
             		populator.setSelectionType(viewerList, 4);
+            	}
+            	else {
+            		errorMsg("Failed adding viewer. Already Added");
             	}
             }
         }
@@ -227,25 +242,40 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             	if (checkViewer(0,"remove")) {
             		populator.setSelectionType(viewerList, 0);
             	}
+            	else {
+            		errorMsg("Failed removing viewer. Not currently added");
+            	}
             }
             else if (selected.equals("Line Chart")){
             	if (checkViewer(1,"remove")) {
             		populator.setSelectionType(viewerList, 1);
+            	}
+            	else {
+            		errorMsg("Failed removing viewer. Not currently added");
             	}
             }
             else if (selected.equals("Bar Chart")){
             	if (checkViewer(2,"remove")) {
             		populator.setSelectionType(viewerList, 2);
             	}
+            	else {
+            		errorMsg("Failed removing viewer. Not currently added");
+            	}
             }
             else if (selected.equals("Scatter Chart")){
             	if (checkViewer(3,"remove")) {
             		populator.setSelectionType(viewerList, 3);
             	}
+            	else {
+            		errorMsg("Failed removing viewer. Not currently added");
+            	}
             }
             else {
             	if (checkViewer(4,"remove")) {
             		populator.setSelectionType(viewerList, 4);
+            	}
+            	else {
+            		errorMsg("Failed removing viewer. Not currently added");
             	}
             }
         }
