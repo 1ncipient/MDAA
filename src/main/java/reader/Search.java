@@ -1,4 +1,4 @@
-package analysis;
+package reader;
 
 public interface Search {
 
