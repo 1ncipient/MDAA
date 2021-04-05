@@ -1,0 +1,23 @@
+package analysis;
+
+import selection.SelectionObject;
+
+public class Analysis5 extends AnalysisObject{
+	private String[] requiredStats;
+	private Data receive;
+	
+	public void calculate(SelectionObject select) {
+		requiredStats = new String[] {"SE.XPD.TOTL.GD.ZS"};
+		this.setSelect(select);
+		receive = new Data();
+		this.setData(receive.getData(this.getRequiredStats(), this.getSelect()));
+	}
+	
+	public void setRequiredStats(String[] requiredStats) {
+		this.requiredStats = requiredStats;
+	}
+	
+	public String[] getRequiredStats() {
+		return requiredStats;
+	}
+}

@@ -2,11 +2,10 @@ package frontEnd;
 
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Vector;
 
 
@@ -32,21 +31,18 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     private JComboBox<String> toList;
     private JComboBox<String> viewsList;
     private JComboBox<String> methodsList;
-
-
+    private Vector<String> methodsNames;
+    private Vector<String> viewsNames;
+    private Vector<String> countriesNames;
     private JButton recalculate;
     private JButton addView;
     private JButton removeView;
-    private String[] analysisTypes = {"CO2 emissions vs Energy use vs PM2.5 air pollution", "PM 2.5 air pollution vs Forest area",
-    "Ratio of C02 emissions and GDP per capita", "Average forest area (% of land) for the selected years", "Average expenditure on education (% of GDP)",
-    "Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)", 
-    "Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1 000 live births)", 
-    "Government expenditure on education (% of GDP) vs health expenditure (% of GDP)"};
-    private int[] startYears = {1990, 1990, 1962, 1990, 1970, 1962, 2000, 1970};
-    private int[] endYears = {2015, 2017, 2016, 2018, 2019, 2018, 2018, 2018};
-    Populator populator;
-    
-    private int[] viewerList = {0,0,0,0,0};
+    private String[] shortCountry;
+    private int[] startYears;
+    private int[] endYears;
+    private int[] viewerList;
+    private String previousAnalysis;
+    private Populator populator;
     /**
     Constructor
     */
@@ -54,9 +50,15 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		// Set window title
 		super("Country Statistics");
 		populator = new Populator();
+		
+		shortCountry = new String[] {"aus", "can", "chl", "deu", "isr", "jpn", "ken", "kor", "usa", "gbr"};
+		startYears = new int[] {1990, 1990, 1962, 1990, 1970, 1962, 2000, 1970};
+		endYears = new int[] {2015, 2017, 2016, 2018, 2019, 2018, 2018, 2018};
+		viewerList = new int[] {0,0,0,0,0};
+		
 		// Set top bar
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");
-		Vector<String> countriesNames = new Vector<String>();
+		countriesNames = new Vector<String>();
 		countriesNames.add("Australia");
 		countriesNames.add("Canada");
 		countriesNames.add("Chile");
@@ -75,7 +77,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		JLabel from = new JLabel("From");
 		JLabel to = new JLabel("To");
 		Vector<String> years = new Vector<String>();
-		for (int i = 2021; i >= 1960; i--) {
+		for (int i = 2021; i >= 1962; i--) {
 			years.add("" + i);
 		}
 		fromList = new JComboBox<String>(years);
@@ -97,7 +99,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
 		JLabel viewsLabel = new JLabel("Available Views: ");
 
-		Vector<String> viewsNames = new Vector<String>();
+		viewsNames = new Vector<String>();
 		viewsNames.add("Pie Chart");
 		viewsNames.add("Line Chart");
 		viewsNames.add("Bar Chart");
@@ -114,7 +116,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
 		JLabel methodLabel = new JLabel("        Choose analysis method: ");
 
-		Vector<String> methodsNames = new Vector<String>();
+		methodsNames = new Vector<String>();
 		methodsNames.add("CO2 emissions vs Energy use vs PM2.5 air pollution");
 		methodsNames.add("PM 2.5 air pollution vs Forest area");
 		methodsNames.add("Ratio of C02 emissions and GDP per capita");
@@ -127,6 +129,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		methodsList = new JComboBox<String>(methodsNames);
 
         methodsList.addActionListener(this);
+        previousAnalysis = (String) methodsList.getSelectedItem();
 
 		JPanel south = new JPanel();
 		south.add(viewsLabel);
@@ -173,8 +176,8 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         if (e.getSource() == fromList){
             int selected = Integer.parseInt((String) fromList.getSelectedItem());
             String analysisSelected = (String) methodsList.getSelectedItem();
-            int min = startYears[indexOf(analysisSelected, analysisTypes)];
-            int max = endYears[indexOf(analysisSelected, analysisTypes)];
+            int min = startYears[methodsNames.indexOf(analysisSelected)];
+            int max = endYears[methodsNames.indexOf(analysisSelected)];
             if (selected < min || selected > max) {
             	errorMsg("Please select another start year, current year not valid.");
             }
@@ -187,8 +190,8 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         else if (e.getSource() == toList) {
         	int selected = Integer.parseInt((String) toList.getSelectedItem());
             String analysisSelected = (String) methodsList.getSelectedItem();
-            int min = startYears[indexOf(analysisSelected, analysisTypes)];
-            int max = endYears[indexOf(analysisSelected, analysisTypes)];
+            int min = startYears[methodsNames.indexOf(analysisSelected)];
+            int max = endYears[methodsNames.indexOf(analysisSelected)];
             if (selected < min || selected > max) {
             	errorMsg("Please select another end year, current year not valid");
             }
@@ -198,7 +201,17 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         }
         
         else if(e.getSource() == methodsList) {
+        	if (!((String) methodsList.getSelectedItem()).equals(previousAnalysis)) {
+        		Arrays.fill(viewerList, 0);
+        		populator.setSelectionType(viewerList, 0);
+        		previousAnalysis = (String) methodsList.getSelectedItem();
+        	}
         	populator.setSelectionType((String) methodsList.getSelectedItem(), 10);
+        }
+        
+        else if (e.getSource() == countriesList) {
+        	String selected = (String) countriesList.getSelectedItem();
+        	populator.setSelectionType(shortCountry[countriesNames.indexOf(selected)], 15);
         }
         // when plus button is pressed (add viewer button)
         else if (e.getSource() == addView) {
@@ -290,20 +303,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         }
         
         else if(e.getSource() == recalculate) {
-        	populator.setSelectionType("finished", 0);
+        	populator.setSelectionType("finished", methodsNames.indexOf(methodsList.getSelectedItem()));
         }
 	}
 	
-	private <T> int indexOf(T item, T[] arr) {
-		for (int i=0; i<arr.length; i++)
-	    {
-	        if (arr[i] != null && arr[i].equals(item)){
-	        	return i;
-	        }
-	    }
-
-	    return -1;
-	}
 	
 	private void errorMsg(String errorStr) {
 		JOptionPane.showMessageDialog(this, errorStr);
