@@ -59,6 +59,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     private static TreeMap<String, String> countryMap;
     private static boolean allPass = false;
     private static ArrayList<String> bannedCountries;
+    private static JFrame frame;
     
     /**
     Constructor
@@ -80,9 +81,6 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		// initialize all the countries and their abbreviations
 		countryMap = loadcountryMap();
 		
-		//create JPanel for graphs
-		west = new JPanel();
-		west.setLayout(new GridLayout(2, 0));
 		
 		// Set top bar
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");
@@ -165,7 +163,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		JPanel east = new JPanel();
 
 		// Set charts region
-		JPanel west = new JPanel();
+		west = new JPanel();
 		west.setLayout(new GridLayout(2, 0));
 
 		getContentPane().add(north, BorderLayout.NORTH);
@@ -175,7 +173,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 	}
 
 	public void launchMainUI() {
-		JFrame frame = this;
+		frame = this;
 		
 		// edit these values to resize window accordingly
 		frame.setSize(1220, 800);
@@ -341,7 +339,12 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         	}
         	
         	if (allPass == true) {
+        		west.removeAll();
+                frame.revalidate();
+        		frame.repaint();
         		populator.setSelectionType("finished", methodsNames.indexOf(methodsList.getSelectedItem()));
+        		frame.revalidate();
+        		frame.repaint();
         	}
         }
 	}
