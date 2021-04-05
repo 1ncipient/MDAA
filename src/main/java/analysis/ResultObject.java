@@ -22,7 +22,7 @@ public class ResultObject {
 	public ResultObject(AnalysisObject analysisObj) {
 		analysis = analysisObj;
 		resultData = new String[10]; //tentative variable (type and length-wise not known)
-		observers = new DisplayViewers(this, analysis);
+		observers = new DisplayViewers(analysis);
 	}
 	
 	/**
@@ -30,8 +30,6 @@ public class ResultObject {
 	 * @param analysis
 	 */
 	public void setResult (AnalysisObject analysis) {
-		String [] resultData = processData(analysis);
-		setResultData(resultData);
 		notifyObserver();
 	}
 	
@@ -67,18 +65,6 @@ public class ResultObject {
 		this.analysis = analysis;
 	}
 	
-	/**
-	 * Helper method; parses data and formats it so to create an array that contains all vital information that the Observer needs.
-	 * @param analysis parameter pulls information utilizing accessor methods and sets to respective elements in the array.
-	 * @return
-	 */
-	private String [] processData (AnalysisObject analysis) {
-		//formatted as ["analysis", "country", "startYear", "endYear", [0,0,0,0,0]
-		resultData[0] = analysis.getAnalysisType();
-		resultData[1] = analysis.getCountry();
-		resultData[2] = Integer.toString(analysis.getStart());
-		resultData[3] = Integer.toString(analysis.getStart());
-	}
 	
 	/**
 	 * Helper method; invokes observers.update(), lets Observer know that processes are complete and ready to update.

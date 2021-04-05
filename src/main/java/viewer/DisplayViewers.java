@@ -1,14 +1,13 @@
 package viewer;
 
 import analysis.AnalysisObject;
-import analysis.ResultObject;
 
 public class DisplayViewers extends Observer{
 	
 	private int[] viewers;
 	
-	public DisplayViewers(ResultObject result, AnalysisObject analysis) {
-		super(result, analysis);
+	public DisplayViewers(AnalysisObject analysis) {
+		super(analysis);
 		viewers = this.getAnalysis().getViewers();
 	}
 	
@@ -16,6 +15,7 @@ public class DisplayViewers extends Observer{
 		this.setStatus(true);
 		viewers = this.getAnalysis().getViewers();
 		for (int i = 0; i < viewers.length; i++) {
+			
 		}
 	}
 	

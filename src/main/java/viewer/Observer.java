@@ -11,7 +11,6 @@ import analysis.ResultObject;
  */
 public class Observer implements SendUpdate {
 	
-	private ResultObject result;		//holds current ResultObject
 	private AnalysisObject analysis;	//holds current AnalysisObject
 	private boolean status;				//flag for whether result/analysis have been updated or not
 	
@@ -22,19 +21,11 @@ public class Observer implements SendUpdate {
 	 * @param result New ResultObject for Observer
 	 * @param analysis New ObserverObject for Observer
 	 */
-	public Observer(ResultObject result, AnalysisObject analysis) {
-		this.result = result;
+	public Observer(AnalysisObject analysis) {
 		this.analysis = analysis;
 		status = false;
 	}
 	
-	/**
-	 * Setter method for result.
-	 * @param result New ResultObject for current object
-	 */
-	public void setResult(ResultObject result) {
-		this.result = result;
-	}
 	/**
 	 * Setter method for analysis.
 	 * @param result New AnalysisObject for current object
@@ -43,13 +34,6 @@ public class Observer implements SendUpdate {
 		this.analysis = analysis;
 	}
 	
-	/**
-	 * Getter method that returns ResultObject.
-	 * @return Returns stored ResultObject
-	 */
-	public ResultObject getResult() {
-		return result;
-	}
 	
 	/**
 	 * Getter method that returns AnalysisObject.
