@@ -73,6 +73,7 @@ public class DisplayViewers extends Observer{
 	}
 	
 	private void render() {
+		System.out.println("test");
 		for(int i = 0; i < 5; i++) {
 			if (viewerObjects[i] != null) {
 				MainUI.west.add(viewerObjects[i]);
