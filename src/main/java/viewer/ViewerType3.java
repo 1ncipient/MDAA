@@ -23,6 +23,7 @@ public class ViewerType3 implements ViewerCreation{
 	private static HashMap<String, String> labelNames = new HashMap<String, String>();
 	
 	private static void fillLabels() {
+		labelNames.put("RATIO", "CO2 emissions to GDP per capita (US$) ratio");
         labelNames.put("SP.POP.TOTL", "Population");
         labelNames.put("EN.ATM.CO2E.PC", "CO2 emissions (metric tons/capita)");
         labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 air pollution (micrograms/cubic meter)");
