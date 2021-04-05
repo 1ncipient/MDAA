@@ -55,7 +55,6 @@ public class Populator implements Populate {
         	default:
         		compute = new ComputeServer(new AnalysisCreator8());
         	}
-        	System.out.println(value);
         	compute.doThis(select);
         }
     }
