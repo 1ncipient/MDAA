@@ -81,7 +81,7 @@ public class ViewerType4 implements ViewerCreation{
 		
 		
 		
-		JFreeChart scatterChart = new JFreeChart("Mortality vs Expenses & Hospital Beds",
+		JFreeChart scatterChart = new JFreeChart(analysis.getSelect().getAnalysisType(),
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
 		ChartPanel chartPanel = new ChartPanel(scatterChart);
