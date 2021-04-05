@@ -373,7 +373,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		String content = "";
 		try {
 		      File myObj = new File(countryFile);
-		      Scanner myReader = new Scanner(myObj);
+		      Scanner myReader = new Scanner(myObj, "utf-8");
 		      while (myReader.hasNextLine()) {
 		        String data = myReader.nextLine();
 		        content += data + ",";
