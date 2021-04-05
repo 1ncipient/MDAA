@@ -5,7 +5,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.Vector;
 
 
@@ -15,6 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.jfree.chart.util.ArrayUtils;
 
 import selection.Populator;
 
@@ -37,12 +48,16 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     private JButton recalculate;
     private JButton addView;
     private JButton removeView;
-    private String[] shortCountry;
     private int[] startYears;
     private int[] endYears;
     private int[] viewerList;
     private String previousAnalysis;
     private Populator populator;
+    private static String countryFile = "country_list_populator.csv";
+    private static TreeMap<String, String> countryMap;
+    private static boolean allPass = false;
+    private static ArrayList<String> bannedCountries;
+    
     /**
     Constructor
     */
@@ -50,25 +65,25 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		// Set window title
 		super("Country Statistics");
 		populator = new Populator();
+		// initially set the analysis type and country abbreviation in case they do not want to change this selection
+		populator.setSelectionType("CO2 emissions vs Energy use vs PM2.5 air pollution", 10);
+		populator.setSelectionType("afg", 15);
 		
-		shortCountry = new String[] {"aus", "can", "chl", "deu", "isr", "jpn", "ken", "kor", "usa", "gbr"};
+		// initialize all the restrictions
 		startYears = new int[] {1990, 1990, 1962, 1990, 1970, 1962, 2000, 1970};
 		endYears = new int[] {2015, 2017, 2016, 2018, 2019, 2018, 2018, 2018};
 		viewerList = new int[] {0,0,0,0,0};
+		bannedCountries = new ArrayList<String>(Arrays.asList("Anguilla"));
+		
+		// initialize all the countries and their abbreviations
+		countryMap = loadcountryMap();
 		
 		// Set top bar
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");
 		countriesNames = new Vector<String>();
-		countriesNames.add("Australia");
-		countriesNames.add("Canada");
-		countriesNames.add("Chile");
-		countriesNames.add("Germany");
-		countriesNames.add("Israel");
-        countriesNames.add("Japan");
-        countriesNames.add("Kenya");
-        countriesNames.add("Korea");
-        countriesNames.add("USA");
-        countriesNames.add("United Kingdom");
+		for (String name: countryMap.keySet()) {
+			countriesNames.add(name);
+		}
 		countriesNames.sort(null);
 		countriesList = new JComboBox<String>(countriesNames);
 
@@ -153,8 +168,6 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		getContentPane().add(west, BorderLayout.WEST);
 	}
 
-
-
 	public void launchMainUI() {
 		JFrame frame = this;
 		
@@ -170,7 +183,6 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		frame.setVisible(true);
 	}
 
-
 	public void actionPerformed(ActionEvent e) {
         //get selected item
         if (e.getSource() == fromList){
@@ -180,6 +192,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             int max = endYears[methodsNames.indexOf(analysisSelected)];
             if (selected < min || selected > max) {
             	errorMsg("Please select another start year, current year not valid.");
+            	allPass = false;
             }
             else {
             	populator.setSelectionType("startYr", selected);
@@ -193,7 +206,8 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             int min = startYears[methodsNames.indexOf(analysisSelected)];
             int max = endYears[methodsNames.indexOf(analysisSelected)];
             if (selected < min || selected > max) {
-            	errorMsg("Please select another end year, current year not valid");
+            	errorMsg("Please select another end year, current year not valid.");
+            	allPass = false;
             }
             else {
             	populator.setSelectionType("endYr", selected);
@@ -211,8 +225,15 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         
         else if (e.getSource() == countriesList) {
         	String selected = (String) countriesList.getSelectedItem();
-        	populator.setSelectionType(shortCountry[countriesNames.indexOf(selected)], 15);
+        	if (bannedCountries.contains(selected)) {
+        		errorMsg("This country is unavailable! Please select another country.");
+            	allPass = false;
+        	}
+        	else {
+        		populator.setSelectionType(countryMap.get(selected), 15);
+        	}
         }
+        
         // when plus button is pressed (add viewer button)
         else if (e.getSource() == addView) {
         	String selected = (String) viewsList.getSelectedItem();
@@ -303,10 +324,21 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         }
         
         else if(e.getSource() == recalculate) {
-        	populator.setSelectionType("finished", methodsNames.indexOf(methodsList.getSelectedItem()));
+        	// submit a new event so the actionPerformed() will run again to verify selections
+        	allPass = true;
+        	countriesList.setSelectedIndex(countriesList.getSelectedIndex());
+        	fromList.setSelectedIndex(fromList.getSelectedIndex());
+        	toList.setSelectedIndex(toList.getSelectedIndex());
+        	if (!contains(viewerList, 1)) {
+        		allPass = false;
+        		errorMsg("No viewers have been added.");
+        	}
+        	
+        	if (allPass == true) {
+        		populator.setSelectionType("finished", methodsNames.indexOf(methodsList.getSelectedItem()));
+        	}
         }
 	}
-	
 	
 	private void errorMsg(String errorStr) {
 		JOptionPane.showMessageDialog(this, errorStr);
@@ -328,5 +360,44 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 			return true;
 		}
 	}
-
+	
+	private static TreeMap<String, String> loadcountryMap() {
+		TreeMap<String, String> returnList = new TreeMap<String, String>();
+		
+		String content = "";
+		try {
+		      File myObj = new File(countryFile);
+		      Scanner myReader = new Scanner(myObj);
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        content += data + ",";
+		      }
+		      myReader.close();
+		}
+		// display error and terminate program if database error
+		catch (FileNotFoundException e) {
+			JPanel panel = new JPanel();
+			JOptionPane.showMessageDialog(panel, "The country database is corrupted! Application now terminating...", "Fatal error", JOptionPane.WARNING_MESSAGE);
+			System.exit(0);
+		}
+		// loop through the csv and store all country abbreviation combos in the hashmap
+		String[] tempcountryMap = content.split(",");
+		
+		for (int i = 0; i < tempcountryMap.length; i += 2) {
+			returnList.put(tempcountryMap[i], tempcountryMap[i+1].toLowerCase());
+		}
+		
+		return returnList;
+	}
+	
+	private static boolean contains(int[] suppliedArr, int value) {
+		for (int i = 0; i< suppliedArr.length; i++) {
+			if (suppliedArr[i] == 1) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 }
