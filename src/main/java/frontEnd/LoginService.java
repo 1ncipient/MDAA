@@ -1,11 +1,7 @@
 package frontEnd;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -118,23 +114,7 @@ public class LoginService extends JFrame implements LoginCreds {
 		}
 		else {
 			JOptionPane.showMessageDialog(panel, "Invalid username/password combination!", "Please try again", JOptionPane.WARNING_MESSAGE);
-		}
-		
-	}
-	
-	/**
-	 * Main method initializes the LoginService object
-	 * 
-	 */
-	public static void main(String[] args) {
-
-		JFrame frame = LoginService.getInstance();
-		frame.setSize(335, 120);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		
+		}	
 	}
 	
 }

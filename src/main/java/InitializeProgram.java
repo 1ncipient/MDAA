@@ -1,0 +1,28 @@
+import javax.swing.JFrame;
+
+import frontEnd.LoginService;
+
+/**
+ * This class represents the starting point to use the McBal Demographic Analysis System
+ * 
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
+ *
+ */
+public class InitializeProgram {
+
+	/**
+	 * Main method initializes the McBal Demographic Analysis System
+	 * 
+	 */
+	public static void main(String[] args) {
+
+		JFrame frame = LoginService.getInstance();
+		frame.setSize(335, 120);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		
+	}
+
+}
