@@ -13,6 +13,6 @@ public interface Calculate {
 	 * Abstract method, implemented by AnalysisObject
 	 * @param select New SelectionObject for current AnalysisObject
 	 */
-	public void calculate(selection.SelectionObject select);
+	public void calculate(SelectionObject select);
 
 }

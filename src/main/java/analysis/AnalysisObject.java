@@ -1,7 +1,5 @@
 package analysis;
 
-import java.lang.reflect.Array;
-
 import selection.SelectionObject;
 
 
@@ -12,7 +10,7 @@ import selection.SelectionObject;
  */
 public class AnalysisObject implements Calculate{
 	private SelectionObject select;					//SelectionObject containing information from user
-	private String[] data;								//data from API
+	private DataObject[] data;								//data from API
 	
 	
 	/**
@@ -57,7 +55,7 @@ public class AnalysisObject implements Calculate{
 	 * Setter method for data
 	 * @param data New array for data
 	 */
-	public void setData(String[] data) {
+	public void setData(DataObject[] data) {
 		this.data = data;
 	}
 	
@@ -113,7 +111,7 @@ public class AnalysisObject implements Calculate{
 	 * Getter method that returns array of data obtained from API
 	 * @return String array
 	 */
-	public String[] getData() {
+	public DataObject[] getData() {
 		return data;
 	}
 	

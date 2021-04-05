@@ -2,9 +2,7 @@ package frontEnd;
 
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -37,16 +35,12 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     private JButton recalculate;
     private JButton addView;
     private JButton removeView;
-    private String[] analysisTypes = {"CO2 emissions vs Energy use vs PM2.5 air pollution", "PM 2.5 air pollution vs Forest area",
-    "Ratio of C02 emissions and GDP per capita", "Average forest area (% of land) for the selected years", "Average expenditure on education (% of GDP)",
-    "Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)", 
-    "Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1 000 live births)", 
-    "Government expenditure on education (% of GDP) vs health expenditure (% of GDP)"};
-    private int[] startYears = {1990, 1990, 1962, 1990, 1970, 1962, 2000, 1970};
-    private int[] endYears = {2015, 2017, 2016, 2018, 2019, 2018, 2018, 2018};
+    private String[] analysisTypes;
+    private int[] startYears;
+    private int[] endYears;
     Populator populator;
     
-    private int[] viewerList = {0,0,0,0,0};
+    private int[] viewerList;
     /**
     Constructor
     */
@@ -54,6 +48,16 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		// Set window title
 		super("Country Statistics");
 		populator = new Populator();
+		
+		analysisTypes = new String[]{"CO2 emissions vs Energy use vs PM2.5 air pollution", "PM 2.5 air pollution vs Forest area",
+		    "Ratio of C02 emissions and GDP per capita", "Average forest area (% of land) for the selected years", 
+		    "Average expenditure on education (% of GDP)", "Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)", 
+		    "Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1 000 live births)", 
+		    "Government expenditure on education (% of GDP) vs health expenditure (% of GDP)"};
+		startYears = new int[] {1990, 1990, 1962, 1990, 1970, 1962, 2000, 1970};
+		endYears = new int[] {2015, 2017, 2016, 2018, 2019, 2018, 2018, 2018};
+		viewerList = new int[] {0,0,0,0,0};
+		
 		// Set top bar
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");
 		Vector<String> countriesNames = new Vector<String>();
@@ -290,7 +294,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         }
         
         else if(e.getSource() == recalculate) {
-        	populator.setSelectionType("finished", 0);
+        	populator.setSelectionType("finished", indexOf((String) methodsList.getSelectedItem(), analysisTypes));
         }
 	}
 	
