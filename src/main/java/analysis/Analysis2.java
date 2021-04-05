@@ -11,6 +11,8 @@ public class Analysis2 extends AnalysisObject{
 		this.setSelect(select);
 		receive = new Data();
 		this.setData(receive.getData(this.getRequiredStats(), this.getSelect()));
+		ResultObject result = new ResultObject(this);
+		result.setResult(this);
 	}
 	
 	public void setRequiredStats(String[] requiredStats) {
