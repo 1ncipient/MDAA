@@ -32,7 +32,9 @@ public class ViewerType4 implements ViewerCreation{
 		
 		TimeSeries series1 = new TimeSeries(labelNames.get(data[0].getDataName()));
 		for (Integer name: dataRec.keySet()) {
-			series1.add(new Year(name), dataRec.get(name));
+			if (dataRec.get(name) != -1) {
+				series1.add(new Year(name), dataRec.get(name));
+			}
 		}
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(series1);
@@ -43,7 +45,9 @@ public class ViewerType4 implements ViewerCreation{
 			TimeSeries series2 = new TimeSeries(labelNames.get(data[1].getDataName()));
 			dataRec = data[1].getDataRecovered();
 			for (Integer name: dataRec.keySet()) {
-				series2.add(new Year(name), dataRec.get(name));
+				if (dataRec.get(name) != -1) {
+					series2.add(new Year(name), dataRec.get(name));
+				}
 			}
 			
 			dataset2.addSeries(series2);
@@ -54,7 +58,9 @@ public class ViewerType4 implements ViewerCreation{
 			TimeSeries series3 = new TimeSeries(labelNames.get(data[2].getDataName()));
 			dataRec = data[2].getDataRecovered();
 			for (Integer name: dataRec.keySet()) {
-				series3.add(new Year(name), dataRec.get(name));
+				if (dataRec.get(name) != -1) {
+					series3.add(new Year(name), dataRec.get(name));
+				}
 			}
 			dataset.addSeries(series3);
 		}

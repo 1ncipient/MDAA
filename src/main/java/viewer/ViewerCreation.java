@@ -1,11 +1,11 @@
 package viewer;
 
-import org.jfree.chart.ChartPanel;
+import javax.swing.JComponent;
 
 import analysis.AnalysisObject;
 
 public interface ViewerCreation {
 	
-	public ChartPanel createViewer(AnalysisObject analysis);
+	public JComponent createViewer(AnalysisObject analysis);
 
 }
