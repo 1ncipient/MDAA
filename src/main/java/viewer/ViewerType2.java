@@ -96,16 +96,17 @@ public class ViewerType2 extends JFrame implements ViewerCreation{
 		return chartPanel;
 	}
 	private static void fillLabels() {
-		labelNames.put("SP.POP.TOTL", "Population");
-		labelNames.put("EN.ATM.CO2E.PC", "CO2 emissions (metric tons/capita)");
-		labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 air pollution (micrograms/cubic meter)");
-		labelNames.put("AG.LND.FRST.ZS", "Forest area (% of land area)");
-		labelNames.put("EG.USE.PCAP.KG.OE", "GDP/capita (US$)");
-		labelNames.put("SH.MED.BEDS.ZS", "Hospital beds/1,000 people");
-		labelNames.put("SE.XPD.TOTL.GD.ZS", "Government education expenditure (% of GDP)");
-		labelNames.put("SH.STA.MMRT", "Maternal mortality ratio/100,000 births)");
-		labelNames.put("SH.XPD.CHEX.PC.CD", "Current health expenditure/capita (current US$)");
-		labelNames.put("SH.XPD.CHEX.GD.ZS", "Current health expenditure (% of GDP)");
-		labelNames.put("SP.DYN.IMRT.IN", "Infant mortality/1,000 births)");
+        labelNames.put("SP.POP.TOTL", "Population");
+        labelNames.put("EN.ATM.CO2E.PC", "CO2 emissions (metric tons/capita)");
+        labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 air pollution (micrograms/cubic meter)");
+        labelNames.put("AG.LND.FRST.ZS", "Forest area (% of land area)");
+        labelNames.put("EG.USE.PCAP.KG.OE", "Energy use (kg oil equivalent/capita)");
+        labelNames.put("NY.GDP.PCAP.CD", "GDP/capita (US$)");
+        labelNames.put("SH.MED.BEDS.ZS", "Hospital beds/1,000 people");
+        labelNames.put("SE.XPD.TOTL.GD.ZS", "Government education expenditure (% of GDP)");
+        labelNames.put("SH.STA.MMRT", "Maternal mortality ratio/100,000 births)");
+        labelNames.put("SH.XPD.CHEX.PC.CD", "Current health expenditure/capita (current US$)");
+        labelNames.put("SH.XPD.CHEX.GD.ZS", "Current health expenditure (% of GDP)");
+        labelNames.put("SP.DYN.IMRT.IN", "Infant mortality/1,000 births)");
 	    }
 }
