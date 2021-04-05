@@ -1,7 +1,11 @@
 package viewer;
 
-import analysis.ResultObject;
+import org.jfree.chart.ChartPanel;
+
+import analysis.AnalysisObject;
 
 public interface ViewerCreation {
-	public void createViewer(ResultObject result);
+	
+	public ChartPanel createViewer(AnalysisObject analysis);
+
 }
