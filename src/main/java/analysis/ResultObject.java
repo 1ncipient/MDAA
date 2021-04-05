@@ -1,5 +1,8 @@
 package analysis;
 
+import viewer.DisplayViewers;
+import viewer.Observer;
+
 /**
  * This class defines the ResultObject - parses data that can be utilized by the observers to convert into data that the viewer can use.
  * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
@@ -16,10 +19,10 @@ public class ResultObject {
 	 * @param analysisObj
 	 * @param observer
 	 */
-	public ResultObject(AnalysisObject analysisObj, Observer observer) {
+	public ResultObject(AnalysisObject analysisObj) {
 		analysis = analysisObj;
 		resultData = new String[10]; //tentative variable (type and length-wise not known)
-		observers = new Observer(this, analysis);
+		observers = new DisplayViewers(this, analysis);
 	}
 	
 	/**
@@ -29,6 +32,7 @@ public class ResultObject {
 	public void setResult (AnalysisObject analysis) {
 		String [] resultData = processData(analysis);
 		setResultData(resultData);
+		notifyObserver();
 	}
 	
 	/**

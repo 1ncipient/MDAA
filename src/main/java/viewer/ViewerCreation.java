@@ -1,5 +1,7 @@
 package viewer;
 
-public interface ViewerCreation {
+import analysis.ResultObject;
 
+public interface ViewerCreation {
+	public void createViewer(ResultObject result);
 }
