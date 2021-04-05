@@ -36,7 +36,9 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
      // instance variables
 	private static final long serialVersionUID = 1L;
-
+	
+	public static JPanel west;
+	
     private JComboBox<String> countriesList;
     private JComboBox<String> fromList;
     private JComboBox<String> toList;
@@ -77,6 +79,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		
 		// initialize all the countries and their abbreviations
 		countryMap = loadcountryMap();
+		
+		//create JPanel for graphs
+		west = new JPanel();
+		west.setLayout(new GridLayout(2, 0));
 		
 		// Set top bar
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");

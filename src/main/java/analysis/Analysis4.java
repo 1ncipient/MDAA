@@ -7,7 +7,7 @@ public class Analysis4 extends AnalysisObject{
 	private Data receive;
 	
 	public void calculate(SelectionObject select) {
-		requiredStats = new String[] {"AG.LND.FRST.ZS", "EG.USE.PCAP.KG.OE", "EN.ATM.PM25.MC.M3"};
+		requiredStats = new String[] {"AG.LND.FRST.ZS"};
 		this.setSelect(select);
 		receive = new Data();
 		this.setData(receive.getData(this.getRequiredStats(), this.getSelect()));
