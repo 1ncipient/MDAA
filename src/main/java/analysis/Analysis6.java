@@ -10,7 +10,7 @@ public class Analysis6 extends AnalysisObject{
 		requiredStats = new String[] {"SH.MED.BEDS.ZS", "SH.XPD.CHEX.GD.ZS"};
 		this.setSelect(select);
 		receive = new Data();
-		this.setData(receive.getData(requiredStats, select));
+		this.setData(receive.getData(requiredStats, this.getSelect()));
 	}
 	
 	public void setRequiredStats(String[] requiredStats) {

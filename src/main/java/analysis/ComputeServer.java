@@ -7,7 +7,7 @@ public class ComputeServer implements Recalculate{
 	private Creator create;
 	
 	public ComputeServer(Creator create) {
-		setCreator(create);
+		this.setCreator(create);
 	}
 	
 	private void setCreator(Creator create) {
@@ -16,7 +16,7 @@ public class ComputeServer implements Recalculate{
 	
 	public void	doThis (SelectionObject select) {
 		this.select = select;
-		execute();
+		this.execute();
 	}
 	
 	private void execute() {
