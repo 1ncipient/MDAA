@@ -138,11 +138,11 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		methodsNames = new Vector<String>();
 		methodsNames.add("CO2 emissions vs Energy use vs PM2.5 air pollution");
 		methodsNames.add("PM 2.5 air pollution vs Forest area");
-		methodsNames.add("Ratio of C02 emissions and GDP per capita");
+		methodsNames.add("Ratio of CO2 emissions and GDP per capita");
 		methodsNames.add("Average forest area (% of land) for the selected years");
         methodsNames.add("Average expenditure on education (% of GDP)");
-		methodsNames.add("Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)");
-		methodsNames.add("Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1 000 live births)");
+		methodsNames.add("Ratio of hospital beds (per 1000) and current health expenditure (per 1000)");
+		methodsNames.add("Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1000 live births)");
         methodsNames.add("Government expenditure on education (% of GDP) vs health expenditure (% of GDP)");
 
 		methodsList = new JComboBox<String>(methodsNames);

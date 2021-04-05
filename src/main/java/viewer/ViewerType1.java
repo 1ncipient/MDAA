@@ -9,10 +9,13 @@ import javax.swing.BorderFactory;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.util.TableOrder;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import analysis.AnalysisObject;
 import analysis.DataObject;
+import frontEnd.MainUI;
 
 
 /**
@@ -22,45 +25,58 @@ import analysis.DataObject;
  */
 public class ViewerType1 implements ViewerCreation{
 
+	private static HashMap<String, String> labelNames = new HashMap<String, String>();
+	
+	private static void fillLabels() {
+		labelNames.put("RATIO", "CO2 emissions to GDP per capita (US$) ratio");
+        labelNames.put("SP.POP.TOTL", "Population");
+        labelNames.put("EN.ATM.CO2E.PC", "CO2 emissions (metric tons/capita)");
+        labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 air pollution (micrograms/cubic meter)");
+        labelNames.put("AG.LND.FRST.ZS", "Forest area (% of land area)");
+        labelNames.put("EG.USE.PCAP.KG.OE", "Energy use (kg oil equivalent/capita)");
+        labelNames.put("NY.GDP.PCAP.CD", "GDP/capita (US$)");
+        labelNames.put("SH.MED.BEDS.ZS", "Hospital beds/1,000 people");
+        labelNames.put("SE.XPD.TOTL.GD.ZS", "Government education expenditure (% of GDP)");
+        labelNames.put("SH.STA.MMRT", "Maternal mortality ratio/100,000 births)");
+        labelNames.put("SH.XPD.CHEX.PC.CD", "Current health expenditure/capita (current US$)");
+        labelNames.put("SH.XPD.CHEX.GD.ZS", "Current health expenditure (% of GDP)");
+        labelNames.put("SP.DYN.IMRT.IN", "Infant mortality/1,000 births)");	
+	}
+	
 	/**Method to create pie chart viewers for display
+	 * 
 	 * @param analysis AnalysisObject object containing data to be graphed
 	 */
 	public ChartPanel createViewer(AnalysisObject analysis) {
-		DefaultPieDataset dataset = new DefaultPieDataset();			//create empty dataset to populate
+		// initialize the label set
+		fillLabels();
 		
-		DataObject[] data = analysis.getData();							//array containing data from analysis
+		// parse the data object
+		DataObject[] data = analysis.getData();
+		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
+		String dataName = data[0].getDataName();
 
-		String type = analysis.getAnalysisType();						//type of analysis used
+		// add the data
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		if (dataName.equals("AG.LND.FRST.ZS")) {
+			dataset.addValue(dataRec.get(0), "Forested", "");
+			dataset.addValue(100-dataRec.get(0), "Unforested", "");
+		}
+		else {
+			dataset.addValue(dataRec.get(0), "Education expenditure", "");
+			dataset.addValue(100-dataRec.get(0), "Other expenditure", "");
+		}
 
-		HashMap<Integer, Double> dataRecovered;							//hashmap containing data and year
-		JFreeChart pieChart = null;										//initialize pie chart
-		dataRecovered = data[0].getDataRecovered();
-		double counter = 0;												//counter keeping track of sum of percentages
-		if (type == "AG.LND.FRST.ZS") {									//first "if" handles forested area percentage
-			for (Integer key: dataRecovered.keySet()) {					//for each year of data, add percentage to counter
-				counter+=dataRecovered.get(key);
-			}
-			counter = counter/dataRecovered.size();						//after adding all percentages, divide by number of years
-			dataset.setValue("Forested Area %", counter);
-			dataset.setValue("Unforested Area %",  1-counter);			//unforested area is just 1-forested area
-			pieChart = ChartFactory.createPieChart(analysis.getAnalysisType(), 
-					dataset, true, true, false);
-		}
-		
-		else if (type == "SE.XPD.TOTL.GD.ZS") {							//second "if" handles Education expenditure percentage
-			for (Integer key: dataRecovered.keySet()) {					//same concept as above, but is for Education expenditure rather than forested area
-				counter+=dataRecovered.get(key);
-			}
-			counter = counter/dataRecovered.size();
-			dataset.setValue("Education Expenditure %", counter);
-			dataset.setValue("Other Expenditure %",  1-counter);
-			pieChart = ChartFactory.createPieChart(analysis.getAnalysisType(), 
-					dataset, true, true, false);
-		}
-		ChartPanel chartPanel = new ChartPanel(pieChart);				//create and return chartpanel
+		// get the name
+		JFreeChart pieChart = ChartFactory.createMultiplePieChart(analysis.getSelect().getAnalysisType(), dataset,
+				TableOrder.BY_COLUMN, true, true, false);
+
+		// initialize the chartPanel
+		ChartPanel chartPanel = new ChartPanel(pieChart);
 		chartPanel.setPreferredSize(new Dimension(400, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
+		
 		return chartPanel;
 	}
 }
