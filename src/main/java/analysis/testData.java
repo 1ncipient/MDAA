@@ -7,12 +7,14 @@ import selection.SelectionObject;
 public class testData {
 
 	public static void main(String[] args) {
-		String[] data = {"EN.ATM.CO2E.PC", "EG.USE.PCAP.KG.OE", "EN.ATM.PM25.MC.M3", "AG.LND.FRST.ZS", 
-				"NY.GDP.PCAP.CD", "SE.XPD.TOTL.GD.ZS", "SH.MED.BEDS.ZS", "SH.XPD.CHEX.GD.ZS", "SH.XPD.CHEX.PC.CD", "SP.DYN.IMRT.IN"};
+//		String[] data = {"EN.ATM.CO2E.PC", "EG.USE.PCAP.KG.OE", "EN.ATM.PM25.MC.M3", "AG.LND.FRST.ZS", 
+//				"NY.GDP.PCAP.CD", "SE.XPD.TOTL.GD.ZS", "SH.MED.BEDS.ZS", "SH.XPD.CHEX.GD.ZS", "SH.XPD.CHEX.PC.CD", "SP.DYN.IMRT.IN"};
+		
+		String[] data = {"EN.ATM.CO2E.PC", "EG.USE.PCAP.KG.OE", "EN.ATM.PM25.MC.M3"};
 		
 		Data test = new Data();
 		SelectionObject select = new SelectionObject();
-		select.setStart(2000);
+		select.setStart(2001);
 		select.setEnd(2003);
 		select.setCountry("can");
 		
