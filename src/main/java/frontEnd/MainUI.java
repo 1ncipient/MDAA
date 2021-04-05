@@ -136,14 +136,14 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		JLabel methodLabel = new JLabel("        Choose analysis method: ");
 
 		methodsNames = new Vector<String>();
-		methodsNames.add("CO2 emissions vs Energy use vs PM2.5 air pollution");
-		methodsNames.add("PM 2.5 air pollution vs Forest area");
-		methodsNames.add("Ratio of CO2 emissions and GDP per capita");
-		methodsNames.add("Average forest area (% of land) for the selected years");
-        methodsNames.add("Average expenditure on education (% of GDP)");
-		methodsNames.add("Ratio of hospital beds (per 1000) and current health expenditure (per 1000)");
-		methodsNames.add("Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1000 live births)");
-        methodsNames.add("Government expenditure on education (% of GDP) vs health expenditure (% of GDP)");
+		methodsNames.add("CO2 Emissions vs Energy Use vs PM2.5 Air Pollution");
+		methodsNames.add("PM 2.5 Air Pollution vs Forest Area");
+		methodsNames.add("Ratio of CO2 Emissions and GDP per Capita (current US$)");
+		methodsNames.add("Average Forest Area (% of land) for selected years");
+        methodsNames.add("Average Expenditure on Education (% of GDP)");
+		methodsNames.add("Ratio of Hospital Beds (per 1000) and Current Health Expenditure (per 1000)");
+		methodsNames.add("Healthcare Expenditure per Capita (current US$) vs Infant Mortality Rate (per 1000)");
+        methodsNames.add("Government Education Expenditure (% of GDP) vs Health Expenditure (% of GDP)");
 
 		methodsList = new JComboBox<String>(methodsNames);
 
@@ -333,6 +333,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         	countriesList.setSelectedIndex(countriesList.getSelectedIndex());
         	fromList.setSelectedIndex(fromList.getSelectedIndex());
         	toList.setSelectedIndex(toList.getSelectedIndex());
+        	if (Integer.parseInt((String) fromList.getSelectedItem()) > Integer.parseInt((String) toList.getSelectedItem())) {
+        		allPass = false;
+        		errorMsg("Please make sure the year range is valid.");
+        	}
         	if (!contains(viewerList, 1)) {
         		allPass = false;
         		errorMsg("No viewers have been added.");

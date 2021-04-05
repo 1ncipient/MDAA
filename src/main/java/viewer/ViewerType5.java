@@ -22,69 +22,60 @@ import analysis.DataObject;
  *
  */
 public class ViewerType5 implements ViewerCreation{
-	private static HashMap<String, String> labelNames = new HashMap<String, String>();		//hashmap containing label names
-
 	
-	/**
-	 * Function to convert names received and used but World Bank database and the names to be actually displayed
-	 */
-    private static void fillLabels() {
-    	labelNames.put("RATIO", "CO2 emissions to GDP per capita (US$) ratio");
+	private static HashMap<String, String> labelNames = new HashMap<String, String>();
+	
+	private static void fillLabels() {
+		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
         labelNames.put("SP.POP.TOTL", "Population");
-        labelNames.put("EN.ATM.CO2E.PC", "CO2 emissions (metric tons/capita)");
-        labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 air pollution (micrograms/cubic meter)");
-        labelNames.put("AG.LND.FRST.ZS", "Forest area (% of land area)");
-        labelNames.put("EG.USE.PCAP.KG.OE", "Energy use (kg oil equivalent/capita)");
+        labelNames.put("EN.ATM.CO2E.PC", "CO2 Emissions (tons/capita)");
+        labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 Air Pollution (micrograms/cubic meter)");
+        labelNames.put("AG.LND.FRST.ZS", "Forest Area (% of land area)");
+        labelNames.put("EG.USE.PCAP.KG.OE", "Energy Use (kg oil equivalent/capita)");
         labelNames.put("NY.GDP.PCAP.CD", "GDP/capita (US$)");
-        labelNames.put("SH.MED.BEDS.ZS", "Hospital beds/1,000 people");
-        labelNames.put("SE.XPD.TOTL.GD.ZS", "Government education expenditure (% of GDP)");
-        labelNames.put("SH.STA.MMRT", "Maternal mortality ratio/100,000 births)");
-        labelNames.put("SH.XPD.CHEX.PC.CD", "Current health expenditure/capita (current US$)");
-        labelNames.put("SH.XPD.CHEX.GD.ZS", "Current health expenditure (% of GDP)");
-        labelNames.put("SP.DYN.IMRT.IN", "Infant mortality/1,000 births)");
-    }
+        labelNames.put("SH.MED.BEDS.ZS", "Hospital Beds/1,000 people");
+        labelNames.put("SE.XPD.TOTL.GD.ZS", "Government Education Expenditure (% of GDP)");
+        labelNames.put("SH.STA.MMRT", "Maternal Mortality Ratio/100,000 births)");
+        labelNames.put("SH.XPD.CHEX.PC.CD", "Current Health Expenditure/capita (current US$)");
+        labelNames.put("SH.XPD.CHEX.GD.ZS", "Current Health Expenditure (% of GDP)");
+        labelNames.put("SP.DYN.IMRT.IN", "Infant Mortality/1,000 births)");	
+	}
     
     
     /**Method to create text box report for display
 	 * @param analysis AnalysisObject object containing data to be displayed
 	 */
 	public JComponent createViewer(AnalysisObject analysis) {
-		fillLabels();															//fill in hashmap of label names
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();			//create empty dataset to populate
+		fillLabels();														
 		
-		DataObject[] data = analysis.getData();							//array containing data from analysis
-
-		String type = analysis.getAnalysisType();						//type of analysis used
-		int start = analysis.getStart();								//start year
-		int end = analysis.getEnd();									//end year
-
-		HashMap<Integer, Double> dataRecovered;							//hashmap containing data and year
-		dataRecovered = data[0].getDataRecovered();
+		DataObject[] data = analysis.getData();							
+		
+		int start = analysis.getStart();								
+		int end = analysis.getEnd();									
 		
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
-		report.setPreferredSize(new Dimension(400, 300));
+		report.setPreferredSize(new Dimension(475, 300));
 		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		report.setBackground(Color.white);
-		
 		String reportMessage;
-		reportMessage = "";
 
-		reportMessage += type + "\n";									//title
-		reportMessage += "==============================\n";
+		reportMessage = analysis.getSelect().getAnalysisType() + "\n" + "==============================\n";
 		
-		for (int i = end; i>=start; i--) {								//for each year
-			reportMessage+="Year " + i + ":\n";
-			for (int j = 0; j < data.length; j++) {						//go through each series, and add data to string
-				dataRecovered = data[j].getDataRecovered();
-				double value = dataRecovered.get(i);
-				String name = labelNames.get(data[i].getDataName()); 	
-				reportMessage += "\t" + name + " => " + value + "\n";
+		for (int i = end; i >= start; i--) {
+			reportMessage = reportMessage + "Year " + Integer.toString(i) + ":\n";
+			
+			for (DataObject element : data) {
+				String printValue = "n/a";
+				double value = element.getDataRecovered().get(i);
+				if (value != -1) printValue = Double.toString((double)Math.round(value * 1000d) / 1000d);
+				
+				reportMessage += "\t" + labelNames.get(element.getDataName()) + " => " + printValue + "\n";
 			}
-			reportMessage+="\n";
+			reportMessage += "\n";
 		}
 
-		report.setText(reportMessage);									//set string at the end
+		report.setText(reportMessage);
 		JScrollPane outputScrollPane = new JScrollPane(report);
 		return outputScrollPane;
 	}
