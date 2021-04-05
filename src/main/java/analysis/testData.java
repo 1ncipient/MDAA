@@ -17,6 +17,7 @@ public class testData {
 		select.setCountry("can");
 		
 		DataObject[] array = test.getData(data, select);
+		
 		for (int i = 0; i < array.length; i++) {
 			System.out.println(array[i].getDataName());
 			HashMap<Integer, Double> dataRec = array[i].getDataRecovered();
