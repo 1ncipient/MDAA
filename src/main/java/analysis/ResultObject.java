@@ -65,11 +65,72 @@ public class ResultObject {
 				if (process[i].getDataName().equals("SH.XPD.CHEX.PC.CD")) {
 					dataChange = process[i].getDataRecovered();
 					for (Integer name: dataChange.keySet()) {
-						dataChange.replace(name, dataChange.get(name)*1000);
+						if (dataChange.get(name) != -1) {
+							dataChange.replace(name, dataChange.get(name)*1000);
+						}
 					}
 				}
 			}
+			analysis.setData(process);
 		}
+		
+		else if (analysis.getSelect().getAnalysisType().equals("Average forest area (% of land) for the selected years")) {
+			int counter = 0;
+			double total = 0;
+			dataChange = process[0].getDataRecovered();
+			for (Integer name: dataChange.keySet()) {
+				if (dataChange.get(name) != -1) {
+						total += dataChange.get(name);
+						counter++;
+				}
+			}
+			dataChange.clear();
+			dataChange.put(0, total/counter);
+			analysis.setData(process);
+		}
+		
+		else if (analysis.getSelect().getAnalysisType().equals("Average expenditure on education (% of GDP)")) {
+			int counter = 0;
+			double total = 0;
+			dataChange = process[0].getDataRecovered();
+			for (Integer name: dataChange.keySet()) {
+				if (dataChange.get(name) != -1) {
+						total += dataChange.get(name);
+						counter++;
+				}
+			}
+			dataChange.clear();
+			dataChange.put(0, total/counter);
+			analysis.setData(process);
+		}
+		
+		else if (analysis.getSelect().getAnalysisType().equals("Ratio of C02 emissions and GDP per capita")) {
+            int CO2Pos = 0;
+            int GDPPos = 1;
+            if (process[1].getDataName().equals("EN.ATM.CO2E.PC")) {
+                CO2Pos = 1;
+                GDPPos = 0;
+            }
+
+            HashMap<Integer, Double> newData = new HashMap<Integer, Double>();
+            HashMap<Integer, Double> CO2 = process[CO2Pos].getDataRecovered();
+            HashMap<Integer, Double> GDP = process[GDPPos].getDataRecovered();
+
+            for (Integer name: CO2.keySet()) {
+                if (CO2.get(name) == -1 || GDP.get(name) == -1) {
+                    newData.put(name, Double.valueOf("-1"));
+                }
+                else {
+                    newData.put(name, CO2.get(name) / GDP.get(name));
+                }
+            }
+
+            DataObject temp = new DataObject("RATIO");
+            temp.setDataRecovered(newData);
+            DataObject[] tempHolder = {temp};
+
+            analysis.setData(tempHolder);
+        }
 	}
 	
 	/**
