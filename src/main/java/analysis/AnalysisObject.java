@@ -13,11 +13,6 @@ public class AnalysisObject implements Calculate{
 	private DataObject[] data;								//data from API
 	
 	
-	/**
-	 * Constructor for AnalysisObject
-	 */
-	public AnalysisObject() {
-	}
 	
 	/**
 	 * Setter method for start year in SelectionObject

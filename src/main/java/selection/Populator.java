@@ -29,6 +29,9 @@ public class Populator implements Populate {
         else if (value == 10){
             select.setAnalysisType(type);
         }
+        else if (value == 15) {
+        	select.setCountry(type);
+        }
         else if (type.equals("finished")) {
         	switch (value) {
         	case 0:
