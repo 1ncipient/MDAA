@@ -47,7 +47,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class ViewerType2 implements ViewerCreation{
 	private static HashMap<String, String> labelNames = new HashMap<String, String>();
-	private AnalysisObject analysisObject;
 	
 	
 	public ChartPanel createViewer(AnalysisObject analysis) {

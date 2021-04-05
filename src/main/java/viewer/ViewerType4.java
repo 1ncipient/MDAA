@@ -70,18 +70,31 @@ public class ViewerType4 implements ViewerCreation{
 		XYItemRenderer itemrenderer1 = new XYLineAndShapeRenderer(false, true);
 		XYItemRenderer itemrenderer2 = new XYLineAndShapeRenderer(false, true);
 
+		String check = analysis.getSelect().getAnalysisType();
+		
 		plot.setDataset(0, dataset);
 		plot.setRenderer(0, itemrenderer1);
 		DateAxis domainAxis = new DateAxis("Year");
 		plot.setDomainAxis(domainAxis);
-		plot.setRangeAxis(new NumberAxis(""));
+		if (check.equals("Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1 000 live births)")) {
+			plot.setRangeAxis(new NumberAxis("US$"));
+		}
+		else {
+			plot.setRangeAxis(new NumberAxis(""));
+		}
 		plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
 		
 		
 		if (data.length >= 2) {
 			plot.setDataset(1, dataset2);
 			plot.setRenderer(1, itemrenderer2);
-			plot.setRangeAxis(1, new NumberAxis("US$"));
+			
+			if (check.equals("Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)")) {
+				plot.setRangeAxis(1, new NumberAxis("US$"));
+			}
+			else {
+				plot.setRangeAxis(1, new NumberAxis(""));
+			}
 			plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
 		}
 		
