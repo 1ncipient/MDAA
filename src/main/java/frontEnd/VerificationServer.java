@@ -25,7 +25,8 @@ public class VerificationServer implements Verify {
 	/**
 	 * Method checks to see if the supplied username and password is valid
 	 * 
-	 * @param username the user's supplied username and password
+	 * @param username the user's supplied username
+	 * @param password the user's supplied password
 	 * @return true or false if the password is valid
 	 * 
 	 */

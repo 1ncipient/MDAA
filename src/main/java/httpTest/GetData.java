@@ -12,7 +12,7 @@ public class GetData {
 	public static void main(String[] args) {
 
 		String urlString = String.format(
-				"http://api.worldbank.org/v2/country/%s/indicator/SP.POP.TOTL?date=2000:2001&format=json", "can");
+				"http://api.worldbank.org/v2/country/%s/indicator/SP.POP.TOTL?date=2000:2003&format=json", "can");
 		System.out.println(urlString);
 		int populationForYear = 0;
 		int cummulativePopulation = 0;
