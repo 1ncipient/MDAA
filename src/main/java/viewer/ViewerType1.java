@@ -14,35 +14,41 @@ import org.jfree.data.general.DefaultPieDataset;
 import analysis.AnalysisObject;
 import analysis.DataObject;
 
+
+/**
+ * Class allowing for pie charts to be created
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
+ *
+ */
 public class ViewerType1 implements ViewerCreation{
 
+	/**Method to create pie chart viewers for display
+	 * @param analysis AnalysisObject object containing data to be graphed
+	 */
 	public ChartPanel createViewer(AnalysisObject analysis) {
-		DefaultPieDataset dataset = new DefaultPieDataset();
+		DefaultPieDataset dataset = new DefaultPieDataset();			//create empty dataset to populate
 		
-		DataObject[] data = analysis.getData();
-		String country = analysis.getCountry();
-		String type = analysis.getAnalysisType();
-		int start = analysis.getStart();
-		int end = analysis.getEnd();
-		
-		HashMap<Integer, Double> dataRecovered;
-		JFreeChart pieChart = null;
+		DataObject[] data = analysis.getData();							//array containing data from analysis
+
+		String type = analysis.getAnalysisType();						//type of analysis used
+
+		HashMap<Integer, Double> dataRecovered;							//hashmap containing data and year
+		JFreeChart pieChart = null;										//initialize pie chart
 		dataRecovered = data[0].getDataRecovered();
-		if (type == "AG.LND.FRST.ZS") {
-			double counter = 0;
-			for (Integer key: dataRecovered.keySet()) {
+		double counter = 0;												//counter keeping track of sum of percentages
+		if (type == "AG.LND.FRST.ZS") {									//first "if" handles forested area percentage
+			for (Integer key: dataRecovered.keySet()) {					//for each year of data, add percentage to counter
 				counter+=dataRecovered.get(key);
 			}
-			counter = counter/dataRecovered.size();
+			counter = counter/dataRecovered.size();						//after adding all percentages, divide by number of years
 			dataset.setValue("Forested Area %", counter);
-			dataset.setValue("Unforested Area %",  1-counter);
+			dataset.setValue("Unforested Area %",  1-counter);			//unforested area is just 1-forested area
 			pieChart = ChartFactory.createPieChart(analysis.getAnalysisType(), 
 					dataset, true, true, false);
 		}
 		
-		else if (type == "SE.XPD.TOTL.GD.ZS") {
-			double counter = 0;
-			for (Integer key: dataRecovered.keySet()) {
+		else if (type == "SE.XPD.TOTL.GD.ZS") {							//second "if" handles Education expenditure percentage
+			for (Integer key: dataRecovered.keySet()) {					//same concept as above, but is for Education expenditure rather than forested area
 				counter+=dataRecovered.get(key);
 			}
 			counter = counter/dataRecovered.size();
@@ -51,7 +57,7 @@ public class ViewerType1 implements ViewerCreation{
 			pieChart = ChartFactory.createPieChart(analysis.getAnalysisType(), 
 					dataset, true, true, false);
 		}
-		ChartPanel chartPanel = new ChartPanel(pieChart);
+		ChartPanel chartPanel = new ChartPanel(pieChart);				//create and return chartpanel
 		chartPanel.setPreferredSize(new Dimension(400, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
