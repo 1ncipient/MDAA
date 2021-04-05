@@ -1,5 +1,7 @@
 package analysis;
 
+import java.util.HashMap;
+
 import viewer.DisplayViewers;
 import viewer.Observer;
 
@@ -11,7 +13,6 @@ import viewer.Observer;
 public class ResultObject {
 	//instance variables
 	private AnalysisObject analysis;
-	private String [] resultData;
 	private Observer observers;
 	
 	/**
@@ -21,7 +22,6 @@ public class ResultObject {
 	 */
 	public ResultObject(AnalysisObject analysisObj) {
 		analysis = analysisObj;
-		resultData = new String[10]; //tentative variable (type and length-wise not known)
 		observers = new DisplayViewers(analysis);
 	}
 	
@@ -30,24 +30,10 @@ public class ResultObject {
 	 * @param analysis
 	 */
 	public void setResult (AnalysisObject analysis) {
+		processData(analysis);
 		notifyObserver();
 	}
 	
-	/**
-	 * Mutator method for resultData
-	 * @param resultData parameter set to the variable referenced by this object
-	 */
-	public void setResultData (String [] resultData) {
-		this.resultData = resultData;
-	}
-	
-	/**
-	 * Accessor method for resultData variable.
-	 * @return resultData, String array type
-	 */
-	public String [] getResultData() {
-		return resultData;
-	}
 	
 	/**
 	 * Accessor method for analysis variable
@@ -65,6 +51,26 @@ public class ResultObject {
 		this.analysis = analysis;
 	}
 	
+	/**
+	 * Helper method; parses data and formats it so to create an array that contains all vital information that the Observer needs.
+	 * @param analysis parameter pulls information utilizing accessor methods and sets to respective elements in the array.
+	 * @return
+	 */
+	private void processData (AnalysisObject analysis) {
+		//formatted as ["analysis", "country", "startYear", "endYear", [0,0,0,0,0]
+		DataObject[] process = analysis.getData();
+		HashMap<Integer, Double> dataChange;
+		if (analysis.getSelect().getAnalysisType().equals("Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)")) {
+			for (int i = 0; i < process.length; i++) {
+				if (process[i].getDataName().equals("SH.XPD.CHEX.PC.CD")) {
+					dataChange = process[i].getDataRecovered();
+					for (Integer name: dataChange.keySet()) {
+						dataChange.replace(name, dataChange.get(name)*1000);
+					}
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Helper method; invokes observers.update(), lets Observer know that processes are complete and ready to update.
