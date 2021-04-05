@@ -45,25 +45,27 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 
-public class ViewerType2 extends JFrame implements ViewerCreation{
+public class ViewerType2 implements ViewerCreation{
 	private static HashMap<String, String> labelNames = new HashMap<String, String>();
 	private AnalysisObject analysisObject;
 	
 	
-	public ChartPanel createViewer(AnalysisObject result) {
+	public ChartPanel createViewer(AnalysisObject analysis) {
 		fillLabels();
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		String title = "";
 		
-		for (DataObject analysis : result.getData()) {
-			Map<Integer,Double> map = analysis.getDataRecovered();
-			XYSeries series = new XYSeries(labelNames.get(analysis.getDataName()));
+		for (DataObject data : analysis.getData()) {
+			Map<Integer,Double> map = data.getDataRecovered();
+			XYSeries series = new XYSeries(labelNames.get(data.getDataName()));
 			
 			for (Map.Entry<Integer,Double> entry : map.entrySet()) {
-				series.add(entry.getKey(), entry.getValue() );
+				if (entry.getValue() != -1) {
+					series.add(entry.getKey(), entry.getValue() );
+				}
 			}
 			dataset.addSeries(series);
-			title += labelNames.get(analysis.getDataName()) + " vs";
+			title += labelNames.get(data.getDataName()) + " vs";
 		}
 		title = title.substring(0, title.length()-2);
 		
