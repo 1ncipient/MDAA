@@ -20,16 +20,48 @@ import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-
+/**
+ * Class allowing for line charts to be created
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
+ *
+ */
 public class ViewerType2 implements ViewerCreation{
+	
+	//dictionary matching labels used by World Bank database to labels that will be printed
 	private static HashMap<String, String> labelNames = new HashMap<String, String>();
 	
+	/**
+	 * Function to fill in labelNames HashMap with needed labels
+	 * 
+	 */
+	private static void fillLabels() {
+		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
+        labelNames.put("SP.POP.TOTL", "Population");
+        labelNames.put("EN.ATM.CO2E.PC", "CO2 Emissions (tons/capita)");
+        labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 Air Pollution (micrograms/cubic meter)");
+        labelNames.put("AG.LND.FRST.ZS", "Forest Area (% of land area)");
+        labelNames.put("EG.USE.PCAP.KG.OE", "Energy Use (kg oil equivalent/capita)");
+        labelNames.put("NY.GDP.PCAP.CD", "GDP/capita (US$)");
+        labelNames.put("SH.MED.BEDS.ZS", "Hospital Beds/1,000 people");
+        labelNames.put("SE.XPD.TOTL.GD.ZS", "Government Education Expenditure (% of GDP)");
+        labelNames.put("SH.STA.MMRT", "Maternal Mortality Ratio/100,000 births)");
+        labelNames.put("SH.XPD.CHEX.PC.CD", "Current Health Expenditure/capita (current US$)");
+        labelNames.put("SH.XPD.CHEX.GD.ZS", "Current Health Expenditure (% of GDP)");
+        labelNames.put("SP.DYN.IMRT.IN", "Infant Mortality/1,000 births)");	
+	}
 	
+	/**Method to create line chart viewers for display
+	 * 
+	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns line chart for display
+	 */
 	public ChartPanel createViewer(AnalysisObject analysis) {
+		// initialize the label set
 		fillLabels();
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		String title = "";
 		
+		// add in data from AnalysisObject into dataset
 		for (DataObject data : analysis.getData()) {
 			Map<Integer,Double> map = data.getDataRecovered();
 			XYSeries series = new XYSeries(labelNames.get(data.getDataName()));
@@ -42,9 +74,9 @@ public class ViewerType2 implements ViewerCreation{
 			dataset.addSeries(series);
 			title += labelNames.get(data.getDataName()) + " vs";
 		}
-		title = title.substring(0, title.length()-2);
+		title = title.substring(0, title.length()-2); // remove last "vs"
 		
-		
+		// create bar plot
 		JFreeChart chart = ChartFactory.createXYLineChart(title, "Year", "", dataset, PlotOrientation.VERTICAL, true, true, false);
 		
 		XYPlot plot = chart.getXYPlot();
@@ -71,20 +103,5 @@ public class ViewerType2 implements ViewerCreation{
 		chartPanel.setBackground(Color.white);
 		
 		return chartPanel;
-	}
-	private static void fillLabels() {
-		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
-        labelNames.put("SP.POP.TOTL", "Population");
-        labelNames.put("EN.ATM.CO2E.PC", "CO2 Emissions (tons/capita)");
-        labelNames.put("EN.ATM.PM25.MC.M3", "PM2.5 Air Pollution (micrograms/cubic meter)");
-        labelNames.put("AG.LND.FRST.ZS", "Forest Area (% of land area)");
-        labelNames.put("EG.USE.PCAP.KG.OE", "Energy Use (kg oil equivalent/capita)");
-        labelNames.put("NY.GDP.PCAP.CD", "GDP/capita (US$)");
-        labelNames.put("SH.MED.BEDS.ZS", "Hospital Beds/1,000 people");
-        labelNames.put("SE.XPD.TOTL.GD.ZS", "Government Education Expenditure (% of GDP)");
-        labelNames.put("SH.STA.MMRT", "Maternal Mortality Ratio/100,000 births)");
-        labelNames.put("SH.XPD.CHEX.PC.CD", "Current Health Expenditure/capita (current US$)");
-        labelNames.put("SH.XPD.CHEX.GD.ZS", "Current Health Expenditure (% of GDP)");
-        labelNames.put("SP.DYN.IMRT.IN", "Infant Mortality/1,000 births)");	
 	}
 }

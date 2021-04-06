@@ -20,8 +20,13 @@ import analysis.DataObject;
  */
 public class ViewerType5 implements ViewerCreation{
 	
+	//dictionary matching labels used by World Bank database to labels that will be printed
 	private static HashMap<String, String> labelNames = new HashMap<String, String>();
 	
+	/**
+	 * Function to fill in labelNames HashMap with needed labels
+	 * 
+	 */
 	private static void fillLabels() {
 		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
         labelNames.put("SP.POP.TOTL", "Population");
@@ -39,9 +44,11 @@ public class ViewerType5 implements ViewerCreation{
 	}
     
     
-    /**Method to create text box report for display
-	 * @param analysis AnalysisObject object containing data to be displayed
-	 */
+    /** 
+     * Method to create text box report for display
+     * @param analysis AnalysisObject object containing data to be displayed
+     * @return Returns scrollable text box for display
+     */
 	public JComponent createViewer(AnalysisObject analysis) {
 		fillLabels();														
 		
@@ -57,9 +64,11 @@ public class ViewerType5 implements ViewerCreation{
 	private static JComponent createStandard(AnalysisObject analysis) {
 		DataObject[] data = analysis.getData();							
 		
+		// start and end year
 		int start = analysis.getStart();								
 		int end = analysis.getEnd();									
 		
+		// create text area
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
 		report.setPreferredSize(new Dimension(500, 500));
@@ -69,9 +78,14 @@ public class ViewerType5 implements ViewerCreation{
 
 		reportMessage = analysis.getSelect().getAnalysisType() + "\n" + "==============================\n";
 		
+		// for each year from end to start inclusive
+		// add the year to the output string
+		// go through each data series
+		// and print type of data, and associated value
 		for (int i = end; i >= start; i--) {
 			reportMessage = reportMessage + "Year " + Integer.toString(i) + ":\n";
 			
+			// for each data series, add nme and value to output string
 			for (DataObject element : data) {
 				String printValue = "n/a";
 				double value = element.getDataRecovered().get(i);
@@ -82,6 +96,7 @@ public class ViewerType5 implements ViewerCreation{
 			reportMessage += "\n";
 		}
 
+		// set text box output to the output string
 		report.setText(reportMessage);
 		JScrollPane outputScrollPane = new JScrollPane(report);
 		return outputScrollPane;
@@ -89,9 +104,12 @@ public class ViewerType5 implements ViewerCreation{
 	
 	private static JComponent createRatio(AnalysisObject analysis) {
 		HashMap<Integer, Double> dataRec = analysis.getData()[0].getDataRecovered();						
+
+		// start and end year
 		int start = analysis.getStart();								
-		int end = analysis.getEnd();									
+		int end = analysis.getEnd();	
 		
+		// create text area
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
 		report.setPreferredSize(new Dimension(475, 300));
@@ -101,19 +119,23 @@ public class ViewerType5 implements ViewerCreation{
 
 		reportMessage = analysis.getSelect().getAnalysisType() + "\n" + "==============================\n";
 		
+		// find the correct analysis type to print out the two different ratios
 		if (analysis.getClass().getSimpleName().equals("Analysis4")) {
 			reportMessage = reportMessage + "Year " + Integer.toString(start) + "-" + Integer.toString(end) + ":\n";
+			// compute the percentage and round
 			double percentage = (double)Math.round(dataRec.get(0) * 10000d) / 10000d;
 			reportMessage += "\tForested Area % => " + Double.toString(percentage) + "\n";
 			reportMessage += "\tUnforested Area % => " + Double.toString(100 - percentage) + "\n";
 		}
 		else {
 			reportMessage = reportMessage + "Year " + Integer.toString(start) + "-" + Integer.toString(end) + ":\n";
+			// compute the percentage and round
 			double percentage = (double)Math.round(dataRec.get(0) * 10000d) / 10000d;
 			reportMessage += "\tEducation Expenditure % => " + Double.toString(percentage) + "\n";
 			reportMessage += "\tOther Expenditure % => " + Double.toString(100 - percentage) + "\n";
 		}
 
+		// set text box output to the output string
 		report.setText(reportMessage);
 		JScrollPane outputScrollPane = new JScrollPane(report);
 		return outputScrollPane;

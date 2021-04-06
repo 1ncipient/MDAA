@@ -22,8 +22,12 @@ import analysis.DataObject;
  */
 public class ViewerType1 implements ViewerCreation{
 
-	private static HashMap<String, String> labelNames = new HashMap<String, String>();
+	// dictionary matching labels used by World Bank database to labels that will be printed
+	private static HashMap<String, String> labelNames = new HashMap<String, String>(); 
 	
+	/**
+	 * Function to fill in labelNames HashMap with needed labels
+	 */
 	private static void fillLabels() {
 		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
         labelNames.put("SP.POP.TOTL", "Population");
@@ -43,6 +47,7 @@ public class ViewerType1 implements ViewerCreation{
 	/**Method to create pie chart viewers for display
 	 * 
 	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns pie chart for display
 	 */
 	public ChartPanel createViewer(AnalysisObject analysis) {
 		// initialize the label set
