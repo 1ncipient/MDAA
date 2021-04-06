@@ -101,7 +101,6 @@ public class ViewerType3 implements ViewerCreation{
 		// initialize the plot
 		CategoryPlot plot = new CategoryPlot();
 		BarRenderer barrenderer1 = new BarRenderer();
-		BarRenderer barrenderer2 = new BarRenderer();
 
 		plot.setDataset(0, dataset);
 		plot.setRenderer(0, barrenderer1);

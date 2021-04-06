@@ -3,12 +3,10 @@ package viewer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.HashMap;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
 import analysis.AnalysisObject;
 import analysis.DataObject;
 
@@ -71,7 +69,7 @@ public class ViewerType5 implements ViewerCreation{
 		// create text area
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
-		report.setPreferredSize(new Dimension(500, 500));
+//		report.setPreferredSize(new Dimension(500, 500));
 		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		report.setBackground(Color.white);
 		String reportMessage;
@@ -82,23 +80,37 @@ public class ViewerType5 implements ViewerCreation{
 		// add the year to the output string
 		// go through each data series
 		// and print type of data, and associated value
+		int lines = 2;
 		for (int i = end; i >= start; i--) {
 			reportMessage = reportMessage + "Year " + Integer.toString(i) + ":\n";
+			lines++;
 			
-			// for each data series, add nme and value to output string
+			// for each data series, add name and value to output string
 			for (DataObject element : data) {
 				String printValue = "n/a";
 				double value = element.getDataRecovered().get(i);
 				if (value != -1) printValue = Double.toString((double)Math.round(value * 10000d) / 10000d);
 				
 				reportMessage += "\t" + labelNames.get(element.getDataName()) + " => " + printValue + "\n";
+				lines++;
 			}
 			reportMessage += "\n";
+			lines++;
 		}
 
 		// set text box output to the output string
 		report.setText(reportMessage);
+		
+		// reset the height using printed lines and pixel height plus one more line spacing
+		int height = (lines * 16) + 16;
+		report.setPreferredSize(new Dimension(500,height));
+		
+		// set the scroll bar position
+		report.setCaretPosition(0);
+		
 		JScrollPane outputScrollPane = new JScrollPane(report);
+		outputScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		outputScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		return outputScrollPane;
 	}
 	
@@ -112,7 +124,7 @@ public class ViewerType5 implements ViewerCreation{
 		// create text area
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
-		report.setPreferredSize(new Dimension(475, 300));
+		report.setPreferredSize(new Dimension(500, 300));
 		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		report.setBackground(Color.white);
 		String reportMessage;
