@@ -5,10 +5,21 @@ import javax.swing.JPanel;
 
 import selection.SelectionObject;
 
+/**
+ * This class defines the analysis for analysis type Healthcare Expenditure per Capita (current US$) vs Infant Mortality Rate (per 1000). This class is a subclass of class AnalysisObject.
+ * 
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
+ *
+ */
 public class Analysis7 extends AnalysisObject{
+	//instance variables
 	private String[] requiredStats;
 	private Data receive;
 	
+	/**
+	 * This public method calculate obtains the data based on the analysis tickers and checks if it returns an empty data set. An error message is invoked if no data is found (dataset empty)
+	 * @param select SelectionObject passed in; based on this object's attributes
+	 */
 	public void calculate(SelectionObject select) {
 		requiredStats = new String[] {"SH.XPD.CHEX.PC.CD", "SP.DYN.IMRT.IN"};
 		this.setSelect(select);
@@ -24,10 +35,18 @@ public class Analysis7 extends AnalysisObject{
 		}
 	}
 	
+	/**
+	 * Mutator method for requiredStats
+	 * @param requiredStats sets this object to parameter passed in.
+	 */
 	public void setRequiredStats(String[] requiredStats) {
 		this.requiredStats = requiredStats;
 	}
 	
+	/**
+	 * Accessor method for requiredStats.
+	 * @return requiredStats instance variable
+	 */
 	public String[] getRequiredStats() {
 		return requiredStats;
 	}

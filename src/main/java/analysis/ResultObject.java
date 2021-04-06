@@ -10,7 +10,7 @@ import viewer.Observer;
  * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
  *
  */
-public class ResultObject {
+public class ResultObject implements CreateResult {
 	//instance variables
 	private AnalysisObject analysis;
 	private Observer observers;
