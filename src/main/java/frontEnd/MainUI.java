@@ -173,7 +173,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		frame = this;
 		
 		// edit these values to resize window accordingly
-		frame.setSize(1090, 800);
+		frame.setSize(1150, 800);
 		frame.setResizable(false);
 		
 		// centers the screen
@@ -238,8 +238,13 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         // when plus button is pressed (add viewer button)
         else if (e.getSource() == addView) {
         	String selected = (String) viewsList.getSelectedItem();
+        	String analysisSelected = (String) methodsList.getSelectedItem();
+        	int index = methodsNames.indexOf(analysisSelected);
             if (selected.equals("Pie Chart")){
-            	if (checkViewer(0,"add")) {
+            	if (index != 3 && index != 4 ) {
+            		errorMsg("Failed adding viewer. Viewer cannot be used for this analysis type");
+            	}
+            	else if (checkViewer(0,"add")) {
             		populator.setSelectionType(viewerList, 0);
             	}
             	else {
@@ -247,7 +252,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             	}
             }
             else if (selected.equals("Line Chart")){
-            	if (checkViewer(1,"add")) {
+            	if (index == 3 || index == 4 ) {
+            		errorMsg("Failed adding viewer. Viewer cannot be used for this analysis type");
+            	}
+            	else if (checkViewer(1,"add")) {
             		populator.setSelectionType(viewerList, 1);
             	}
             	else {
@@ -255,7 +263,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             	}
             }
             else if (selected.equals("Bar Chart")){
-            	if (checkViewer(2,"add")) {
+            	if (index == 3 || index == 4 ) {
+            		errorMsg("Failed adding viewer. Viewer cannot be used for this analysis type");
+            	}
+            	else if (checkViewer(2,"add")) {
             		populator.setSelectionType(viewerList, 2);
             	}
             	else {
@@ -263,7 +274,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             	}
             }
             else if (selected.equals("Scatter Chart")){
-            	if (checkViewer(3,"add")) {
+            	if (index == 3 || index == 4 ) {
+            		errorMsg("Failed adding viewer. Viewer cannot be used for this analysis type");
+            	}
+            	else if (checkViewer(3,"add")) {
             		populator.setSelectionType(viewerList, 3);
             	}
             	else {
