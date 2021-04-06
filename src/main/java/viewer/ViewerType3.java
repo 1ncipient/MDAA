@@ -18,10 +18,20 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import analysis.AnalysisObject;
 import analysis.DataObject;
 
+
+/**
+ * Class allowing for bar charts to be created
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
+ *
+ */
 public class ViewerType3 implements ViewerCreation{
 	
-	private static HashMap<String, String> labelNames = new HashMap<String, String>();
+	private static HashMap<String, String> labelNames = new HashMap<String, String>();//dictionary matching labels used by World Bank database to labels that will be printed
 	
+	
+	/**
+	 * Function to fill in labelNames HashMap with needed labels
+	 */
 	private static void fillLabels() {
 		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
         labelNames.put("SP.POP.TOTL", "Population");
@@ -38,6 +48,12 @@ public class ViewerType3 implements ViewerCreation{
         labelNames.put("SP.DYN.IMRT.IN", "Infant Mortality/1,000 births)");	
 	}
 	
+	/**
+	 * Function that calls appropriate function for bar chart creation based on number of data series to be charted
+	 * (eg. 1-,2-,or 3-series data)
+	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns completed chart for display
+	 */
 	public ChartPanel createViewer(AnalysisObject analysis) {
 		if (analysis.getData().length == 3) {
 			return createTriple(analysis);
@@ -49,13 +65,19 @@ public class ViewerType3 implements ViewerCreation{
 		}
 		return createRegular(analysis);
 	}
-
+	
+	/**
+	 * Method to create bar chart for display
+	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns bar chart for display
+	 */
 	private static ChartPanel createRegular(AnalysisObject analysis) {
+		//initialize label set
+		fillLabels();
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
-		fillLabels();
 		
-		int count = analysis.getData().length;
+		int count = analysis.getData().length;			//number of data series to graph
 		
 		// 1 object
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -65,6 +87,7 @@ public class ViewerType3 implements ViewerCreation{
 		}
 		
 		// 2 objects
+		//add in second series data, with appropriate column names
 		if (count >= 2) {
 			dataRec = data[1].getDataRecovered();
 			for (Integer year: dataRec.keySet()) {
@@ -85,24 +108,8 @@ public class ViewerType3 implements ViewerCreation{
 		plot.setRangeAxis(new NumberAxis(""));
 
 		plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
-		
-		
-		// 3 objects
-		DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
-		if (count == 3) {
-			dataRec = data[2].getDataRecovered();
-			for (Integer year: dataRec.keySet()) {
-				if (dataRec.get(year) == -1) continue;
-				else dataset2.setValue(dataRec.get(year), labelNames.get(data[2].getDataName()), Integer.toString(year));
-			}
-			
-			plot.setDataset(1, dataset2);
-			plot.setRenderer(1, barrenderer2);
-			plot.setRangeAxis(1, new NumberAxis(""));
-			plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
-		}
 
-
+		//create actual chart
 		JFreeChart barChart = new JFreeChart(analysis.getSelect().getAnalysisType(),
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
@@ -114,12 +121,19 @@ public class ViewerType3 implements ViewerCreation{
 		return chartPanel;
 	}
 
+	/**
+	 * Method to create bar chart for display. Specific for graph with unusual axis scales
+	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns bar chart for display
+	 */
 	private static ChartPanel createDouble(AnalysisObject analysis) {
+		// initialize the label set
+		fillLabels();
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
-		fillLabels();
+
 		
-		int count = analysis.getData().length;
+		int count = analysis.getData().length;			//number of data series to graph
 		
 		// 1 object
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -129,6 +143,7 @@ public class ViewerType3 implements ViewerCreation{
 		}
 		
 		// 2 objects
+		//add in second series data, with appropriate column names
 		DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
 		if (count >= 2) {
 			dataRec = data[1].getDataRecovered();
@@ -142,6 +157,8 @@ public class ViewerType3 implements ViewerCreation{
 		BarRenderer barrenderer1 = new BarRenderer();
 		BarRenderer barrenderer2 = new BarRenderer();
 
+		
+		//set axis
 		plot.setDataset(0, dataset);
 		plot.setRenderer(0, barrenderer1);
 		CategoryAxis domainAxis = new CategoryAxis("Year");
@@ -155,7 +172,7 @@ public class ViewerType3 implements ViewerCreation{
 		plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
 		plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
 
-
+		//create chart
 		JFreeChart barChart = new JFreeChart(analysis.getSelect().getAnalysisType(),
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
@@ -167,12 +184,18 @@ public class ViewerType3 implements ViewerCreation{
 		return chartPanel;
 	}
 	
+	/**
+	 * Method to create bar chart for display. Specific for 3-series
+	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns bar chart for display
+	 */
 	private static ChartPanel createTriple(AnalysisObject analysis) {
+		// initialize the label set
+		fillLabels();
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
-		fillLabels();
 		
-		int count = analysis.getData().length;
+		int count = analysis.getData().length;			//number of data series to graph
 		
 		// 1 object
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -181,7 +204,8 @@ public class ViewerType3 implements ViewerCreation{
 			else dataset.setValue(dataRec.get(year), labelNames.get(data[0].getDataName()), Integer.toString(year));
 		}
 		
-		// 2 objects
+		// 2nd object
+		//add in second data series data into dataset, with appropriate column names
 		DefaultCategoryDataset dataset2 = new DefaultCategoryDataset();
 		if (count >= 2) {
 			dataRec = data[1].getDataRecovered();
@@ -191,7 +215,8 @@ public class ViewerType3 implements ViewerCreation{
 			}
 		}
 		
-		// 3 objects
+		// 3rd object
+		//add in first data series data into dataset, with appropriate column names
 		if (count == 3) {
 			dataRec = data[2].getDataRecovered();
 			for (Integer year: dataRec.keySet()) {
@@ -204,6 +229,7 @@ public class ViewerType3 implements ViewerCreation{
 		BarRenderer barrenderer1 = new BarRenderer();
 		BarRenderer barrenderer2 = new BarRenderer();
 
+		//set axis names
 		plot.setDataset(0, dataset);
 		plot.setRenderer(0, barrenderer1);
 		CategoryAxis domainAxis = new CategoryAxis("Year");
@@ -217,7 +243,7 @@ public class ViewerType3 implements ViewerCreation{
 		plot.mapDatasetToRangeAxis(0, 0);// 1st dataset to 1st y-axis
 		plot.mapDatasetToRangeAxis(1, 1); // 2nd dataset to 2nd y-axis
 
-
+		//create chart
 		JFreeChart barChart = new JFreeChart(analysis.getSelect().getAnalysisType(),
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 

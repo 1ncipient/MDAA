@@ -11,8 +11,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+
 import analysis.AnalysisObject;
 import analysis.DataObject;
+import frontEnd.MainUI;
 
 
 /**
@@ -22,8 +25,12 @@ import analysis.DataObject;
  */
 public class ViewerType1 implements ViewerCreation{
 
-	private static HashMap<String, String> labelNames = new HashMap<String, String>();
+	private static HashMap<String, String> labelNames = new HashMap<String, String>();		//dictionary matching labels used by World Bank database to labels that will be printed
 	
+	
+	/**
+	 * Function to fill in labelNames HashMap with needed labels
+	 */
 	private static void fillLabels() {
 		labelNames.put("RATIO", "CO2 Emissions to GDP per capita (US$) Ratio");
         labelNames.put("SP.POP.TOTL", "Population");
@@ -43,6 +50,7 @@ public class ViewerType1 implements ViewerCreation{
 	/**Method to create pie chart viewers for display
 	 * 
 	 * @param analysis AnalysisObject object containing data to be graphed
+	 * @return Returns pie chart for display
 	 */
 	public ChartPanel createViewer(AnalysisObject analysis) {
 		// initialize the label set
@@ -51,16 +59,17 @@ public class ViewerType1 implements ViewerCreation{
 		// parse the data object
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
+		String dataName = data[0].getDataName();
 
 		// add the data
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		if (analysis.getClass().getSimpleName().equals("Analysis4")) {
+		if (dataName.equals("AG.LND.FRST.ZS")) {
 			dataset.addValue(dataRec.get(0), "Forested", "");
 			dataset.addValue(100-dataRec.get(0), "Unforested", "");
 		}
 		else {
-			dataset.addValue(dataRec.get(0), "Education Expenditure", "");
-			dataset.addValue(100-dataRec.get(0), "Other Expenditure", "");
+			dataset.addValue(dataRec.get(0), "Education expenditure", "");
+			dataset.addValue(100-dataRec.get(0), "Other expenditure", "");
 		}
 
 		// get the name
@@ -69,7 +78,7 @@ public class ViewerType1 implements ViewerCreation{
 
 		// initialize the chartPanel
 		ChartPanel chartPanel = new ChartPanel(pieChart);
-		chartPanel.setPreferredSize(new Dimension(500, 500));
+		chartPanel.setPreferredSize(new Dimension(400, 300));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		
