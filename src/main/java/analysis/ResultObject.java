@@ -51,7 +51,7 @@ public class ResultObject implements CreateResult {
 		this.analysis = analysis;
 	}
 	
-	/**
+	/*
 	 * Helper method; parses data and formats it so to create an array that contains all vital information that the Observer needs.
 	 * @param analysis parameter pulls information utilizing accessor methods and sets to respective elements in the array.
 	 * @return
@@ -134,14 +134,14 @@ public class ResultObject implements CreateResult {
         }
 	}
 	
-	/**
+	/*
 	 * Helper method; invokes observers.update(), lets Observer know that processes are complete and ready to update.
 	 */
 	private void notifyObserver() {
 		observers.update();
 	}
 	
-	/**
+	/*
 	 * Helper method. Sets observer.
 	 * @param observers
 	 */
