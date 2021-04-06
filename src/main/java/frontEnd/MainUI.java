@@ -173,7 +173,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		frame = this;
 		
 		// edit these values to resize window accordingly
-		frame.setSize(1090, 800);
+		frame.setSize(1150, 800);
 		frame.setResizable(false);
 		
 		// centers the screen

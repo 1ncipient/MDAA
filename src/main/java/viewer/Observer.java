@@ -5,8 +5,8 @@ import analysis.ResultObject;
 
 
 /**
- * Parent observer function.
- * @author Yan Qing Niu
+ * Parent observer class. Notified by ResultObject when that is finished.
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
  *
  */
 public class Observer implements SendUpdate {
@@ -18,8 +18,7 @@ public class Observer implements SendUpdate {
 	
 	/**
 	 * Constructor for Observer class.
-	 * @param result New ResultObject for Observer
-	 * @param analysis New ObserverObject for Observer
+	 * @param analysis New AnalysisObject for Observer
 	 */
 	public Observer(AnalysisObject analysis) {
 		this.analysis = analysis;
