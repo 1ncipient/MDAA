@@ -1,7 +1,5 @@
 package analysis;
 
-import java.util.HashMap;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -32,22 +30,5 @@ public class Analysis4 extends AnalysisObject{
 	
 	public String[] getRequiredStats() {
 		return requiredStats;
-	}
-	
-	private static boolean hasData(DataObject[] dataArr) {
-		boolean valueExists = false;
-		
-		for (DataObject element : dataArr) {
-			HashMap<Integer, Double> tempMap = element.getDataRecovered();
-			
-			for (Integer name: tempMap.keySet()) {
-			    double value = tempMap.get(name);
-			    if (value != -1) valueExists = true;
-			}
-			if (!valueExists) return false;
-			valueExists = false;
-		}
-		
-		return true;
 	}
 }

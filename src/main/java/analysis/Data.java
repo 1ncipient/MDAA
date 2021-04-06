@@ -1,7 +1,5 @@
 package analysis;
 
-import java.util.HashMap;
-
 import reader.CreateData;
 import selection.SelectionObject;
 

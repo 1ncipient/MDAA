@@ -14,8 +14,8 @@ public class testData {
 		
 		Data test = new Data();
 		SelectionObject select = new SelectionObject();
-		select.setStart(2001);
-		select.setEnd(2003);
+		select.setStart(2000);
+		select.setEnd(2004);
 		select.setCountry("can");
 		
 		DataObject[] array = test.getData(data, select);

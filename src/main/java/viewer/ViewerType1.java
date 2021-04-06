@@ -11,11 +11,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.util.TableOrder;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-
 import analysis.AnalysisObject;
 import analysis.DataObject;
-import frontEnd.MainUI;
 
 
 /**
@@ -54,17 +51,16 @@ public class ViewerType1 implements ViewerCreation{
 		// parse the data object
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
-		String dataName = data[0].getDataName();
 
 		// add the data
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		if (dataName.equals("AG.LND.FRST.ZS")) {
+		if (analysis.getClass().getSimpleName().equals("Analysis4")) {
 			dataset.addValue(dataRec.get(0), "Forested", "");
 			dataset.addValue(100-dataRec.get(0), "Unforested", "");
 		}
 		else {
-			dataset.addValue(dataRec.get(0), "Education expenditure", "");
-			dataset.addValue(100-dataRec.get(0), "Other expenditure", "");
+			dataset.addValue(dataRec.get(0), "Education Expenditure", "");
+			dataset.addValue(100-dataRec.get(0), "Other Expenditure", "");
 		}
 
 		// get the name
@@ -73,7 +69,7 @@ public class ViewerType1 implements ViewerCreation{
 
 		// initialize the chartPanel
 		ChartPanel chartPanel = new ChartPanel(pieChart);
-		chartPanel.setPreferredSize(new Dimension(400, 300));
+		chartPanel.setPreferredSize(new Dimension(500, 500));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		

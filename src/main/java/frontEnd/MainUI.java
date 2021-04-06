@@ -2,18 +2,15 @@ package frontEnd;
 
 
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -24,8 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import org.jfree.chart.util.ArrayUtils;
+import javax.swing.border.EmptyBorder;
 
 import selection.Populator;
 
@@ -69,7 +65,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		super("Country Statistics");
 		populator = new Populator();
 		// initially set the analysis type and country abbreviation in case they do not want to change this selection
-		populator.setSelectionType("CO2 emissions vs Energy use vs PM2.5 air pollution", 10);
+		populator.setSelectionType("CO2 Emissions vs Energy Use vs PM2.5 Air Pollution", 10);
 		populator.setSelectionType("afg", 15);
 		
 		// initialize all the restrictions
@@ -164,8 +160,9 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
 		// Set charts region
 		west = new JPanel();
+		west.setBorder(new EmptyBorder(20, 40, 20, 20));
 		west.setLayout(new GridLayout(2, 0));
-
+		
 		getContentPane().add(north, BorderLayout.NORTH);
 		getContentPane().add(east, BorderLayout.EAST);
 		getContentPane().add(south, BorderLayout.SOUTH);
@@ -176,8 +173,8 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		frame = this;
 		
 		// edit these values to resize window accordingly
-		frame.setSize(1220, 800);
-//		frame.setResizable(false);
+		frame.setSize(1090, 800);
+		frame.setResizable(false);
 		
 		// centers the screen
 		frame.setLocationRelativeTo(null);

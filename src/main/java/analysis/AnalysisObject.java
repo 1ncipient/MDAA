@@ -1,5 +1,7 @@
 package analysis;
 
+import java.util.HashMap;
+
 import selection.SelectionObject;
 
 
@@ -132,5 +134,27 @@ public class AnalysisObject implements Calculate{
 	 */
 	public SelectionObject getSelect() {
 		return select;
+	}
+	
+	/**
+	 * Helper method to check if the DataObject array has valid entries
+	 * 
+	 * @return true of false indicating whether there exists data
+	 */
+	public static boolean hasData(DataObject[] dataArr) {
+		boolean valueExists = false;
+		
+		for (DataObject element : dataArr) {
+			HashMap<Integer, Double> tempMap = element.getDataRecovered();
+			
+			for (Integer name: tempMap.keySet()) {
+			    double value = tempMap.get(name);
+			    if (value != -1) valueExists = true;
+			}
+			if (!valueExists) return false;
+			valueExists = false;
+		}
+		
+		return true;
 	}
 }

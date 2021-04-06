@@ -70,13 +70,13 @@ public class ViewerType4 implements ViewerCreation{
 		XYItemRenderer itemrenderer1 = new XYLineAndShapeRenderer(false, true);
 		XYItemRenderer itemrenderer2 = new XYLineAndShapeRenderer(false, true);
 
-		String check = analysis.getSelect().getAnalysisType();
+		String check = analysis.getClass().getSimpleName();
 		
 		plot.setDataset(0, dataset);
 		plot.setRenderer(0, itemrenderer1);
 		DateAxis domainAxis = new DateAxis("Year");
 		plot.setDomainAxis(domainAxis);
-		if (check.equals("Current healthcare expenditure per capita (current USD) vs Mortality rate, infant (per 1 000 live births)")) {
+		if (check.equals("Analysis7")) {
 			plot.setRangeAxis(new NumberAxis("US$"));
 		}
 		else {
@@ -89,7 +89,7 @@ public class ViewerType4 implements ViewerCreation{
 			plot.setDataset(1, dataset2);
 			plot.setRenderer(1, itemrenderer2);
 			
-			if (check.equals("Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)")) {
+			if (check.equals("Analysis6")) {
 				plot.setRangeAxis(1, new NumberAxis("US$"));
 			}
 			else {
@@ -104,7 +104,7 @@ public class ViewerType4 implements ViewerCreation{
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
 		ChartPanel chartPanel = new ChartPanel(scatterChart);
-		chartPanel.setPreferredSize(new Dimension(400, 300));
+		chartPanel.setPreferredSize(new Dimension(500, 500));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		return chartPanel;

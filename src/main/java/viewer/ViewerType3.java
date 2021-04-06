@@ -43,14 +43,14 @@ public class ViewerType3 implements ViewerCreation{
 			return createTriple(analysis);
 		}
 		else if (analysis.getData().length > 1) {
-			if (analysis.getData()[1].getDataName() == "SP.DYN.IMRT.IN") {
+			if (analysis.getClass().getSimpleName().equals("Analysis7")) {
 				return createDouble(analysis);
 			}
 		}
 		return createRegular(analysis);
 	}
 
-	public ChartPanel createRegular(AnalysisObject analysis) {
+	private static ChartPanel createRegular(AnalysisObject analysis) {
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
 		fillLabels();
@@ -107,14 +107,14 @@ public class ViewerType3 implements ViewerCreation{
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);
-		chartPanel.setPreferredSize(new Dimension(400, 300));
+		chartPanel.setPreferredSize(new Dimension(500, 500));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		
 		return chartPanel;
 	}
 
-	public ChartPanel createDouble(AnalysisObject analysis) {
+	private static ChartPanel createDouble(AnalysisObject analysis) {
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
 		fillLabels();
@@ -160,14 +160,14 @@ public class ViewerType3 implements ViewerCreation{
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);
-		chartPanel.setPreferredSize(new Dimension(400, 300));
+		chartPanel.setPreferredSize(new Dimension(500, 500));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		
 		return chartPanel;
 	}
 	
-	public ChartPanel createTriple(AnalysisObject analysis) {
+	private static ChartPanel createTriple(AnalysisObject analysis) {
 		DataObject[] data = analysis.getData();
 		HashMap<Integer, Double> dataRec = data[0].getDataRecovered();
 		fillLabels();
@@ -222,7 +222,7 @@ public class ViewerType3 implements ViewerCreation{
 				new Font("Serif", java.awt.Font.BOLD, 18), plot, true);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);
-		chartPanel.setPreferredSize(new Dimension(400, 300));
+		chartPanel.setPreferredSize(new Dimension(500, 500));
 		chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		chartPanel.setBackground(Color.white);
 		

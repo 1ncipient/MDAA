@@ -57,10 +57,11 @@ public class ResultObject {
 	 * @return
 	 */
 	private void processData (AnalysisObject analysis) {
+		String analysisName = analysis.getClass().getSimpleName();
 		//formatted as ["analysis", "country", "startYear", "endYear", [0,0,0,0,0]
 		DataObject[] process = analysis.getData();
 		HashMap<Integer, Double> dataChange;
-		if (analysis.getSelect().getAnalysisType().equals("Ratio of hospital beds (per 1 000) and current health expenditure (per 1 000)")) {
+		if (analysisName.equals("Analysis6")) {
 			for (int i = 0; i < process.length; i++) {
 				if (process[i].getDataName().equals("SH.XPD.CHEX.PC.CD")) {
 					dataChange = process[i].getDataRecovered();
@@ -74,7 +75,7 @@ public class ResultObject {
 			analysis.setData(process);
 		}
 		
-		else if (analysis.getSelect().getAnalysisType().equals("Average forest area (% of land) for the selected years")) {
+		else if (analysisName.equals("Analysis4")) {
 			int counter = 0;
 			double total = 0;
 			dataChange = process[0].getDataRecovered();
@@ -89,7 +90,7 @@ public class ResultObject {
 			analysis.setData(process);
 		}
 		
-		else if (analysis.getSelect().getAnalysisType().equals("Average expenditure on education (% of GDP)")) {
+		else if (analysisName.equals("Analysis5")) {
 			int counter = 0;
 			double total = 0;
 			dataChange = process[0].getDataRecovered();
@@ -104,7 +105,7 @@ public class ResultObject {
 			analysis.setData(process);
 		}
 		
-		else if (analysis.getSelect().getAnalysisType().equals("Ratio of C02 emissions and GDP per capita")) {
+		else if (analysisName.equals("Analysis3")) {
             int CO2Pos = 0;
             int GDPPos = 1;
             if (process[1].getDataName().equals("EN.ATM.CO2E.PC")) {

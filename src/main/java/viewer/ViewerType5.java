@@ -9,9 +9,6 @@ import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.jfree.chart.ChartPanel;
-import org.jfree.data.category.DefaultCategoryDataset;
-
 import analysis.AnalysisObject;
 import analysis.DataObject;
 
@@ -48,6 +45,16 @@ public class ViewerType5 implements ViewerCreation{
 	public JComponent createViewer(AnalysisObject analysis) {
 		fillLabels();														
 		
+		String analysisNumberType = analysis.getClass().getSimpleName();
+		if (analysisNumberType.equals("Analysis4") || analysisNumberType.equals("Analysis5")) {
+			return createRatio(analysis);
+		}
+		else {
+			return createStandard(analysis);
+		}
+	}
+	
+	private static JComponent createStandard(AnalysisObject analysis) {
 		DataObject[] data = analysis.getData();							
 		
 		int start = analysis.getStart();								
@@ -55,7 +62,7 @@ public class ViewerType5 implements ViewerCreation{
 		
 		JTextArea report = new JTextArea();
 		report.setEditable(false);
-		report.setPreferredSize(new Dimension(475, 300));
+		report.setPreferredSize(new Dimension(500, 500));
 		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		report.setBackground(Color.white);
 		String reportMessage;
@@ -68,11 +75,43 @@ public class ViewerType5 implements ViewerCreation{
 			for (DataObject element : data) {
 				String printValue = "n/a";
 				double value = element.getDataRecovered().get(i);
-				if (value != -1) printValue = Double.toString((double)Math.round(value * 1000d) / 1000d);
+				if (value != -1) printValue = Double.toString((double)Math.round(value * 10000d) / 10000d);
 				
 				reportMessage += "\t" + labelNames.get(element.getDataName()) + " => " + printValue + "\n";
 			}
 			reportMessage += "\n";
+		}
+
+		report.setText(reportMessage);
+		JScrollPane outputScrollPane = new JScrollPane(report);
+		return outputScrollPane;
+	}
+	
+	private static JComponent createRatio(AnalysisObject analysis) {
+		HashMap<Integer, Double> dataRec = analysis.getData()[0].getDataRecovered();						
+		int start = analysis.getStart();								
+		int end = analysis.getEnd();									
+		
+		JTextArea report = new JTextArea();
+		report.setEditable(false);
+		report.setPreferredSize(new Dimension(475, 300));
+		report.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		report.setBackground(Color.white);
+		String reportMessage;
+
+		reportMessage = analysis.getSelect().getAnalysisType() + "\n" + "==============================\n";
+		
+		if (analysis.getClass().getSimpleName().equals("Analysis4")) {
+			reportMessage = reportMessage + "Year " + Integer.toString(start) + "-" + Integer.toString(end) + ":\n";
+			double percentage = (double)Math.round(dataRec.get(0) * 10000d) / 10000d;
+			reportMessage += "\tForested Area % => " + Double.toString(percentage) + "\n";
+			reportMessage += "\tUnforested Area % => " + Double.toString(100 - percentage) + "\n";
+		}
+		else {
+			reportMessage = reportMessage + "Year " + Integer.toString(start) + "-" + Integer.toString(end) + ":\n";
+			double percentage = (double)Math.round(dataRec.get(0) * 10000d) / 10000d;
+			reportMessage += "\tEducation Expenditure % => " + Double.toString(percentage) + "\n";
+			reportMessage += "\tOther Expenditure % => " + Double.toString(100 - percentage) + "\n";
 		}
 
 		report.setText(reportMessage);
