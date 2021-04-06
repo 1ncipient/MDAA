@@ -1,8 +1,6 @@
 package frontEnd;
 
-
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,9 +24,6 @@ import javax.swing.border.EmptyBorder;
 import selection.Populator;
 
 public class MainUI extends JFrame implements Launch, ActionListener{
-	/**
-	 * 
-	 */
 
      // instance variables
 	private static final long serialVersionUID = 1L;
@@ -54,6 +49,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     private static String countryFile = "country_list_populator.csv";
     private static TreeMap<String, String> countryMap;
     private static boolean allPass = false;
+    private static String bannedCountryFile = "country_list_restrictor.csv";
     private static ArrayList<String> bannedCountries;
     private static JFrame frame;
     
@@ -72,11 +68,10 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		startYears = new int[] {1990, 1990, 1962, 1990, 1970, 1962, 2000, 1970};
 		endYears = new int[] {2015, 2017, 2016, 2018, 2019, 2018, 2018, 2018};
 		viewerList = new int[] {0,0,0,0,0};
-		bannedCountries = new ArrayList<String>(Arrays.asList("Anguilla"));
+		bannedCountries = initBannedCountries();
 		
 		// initialize all the countries and their abbreviations
 		countryMap = loadcountryMap();
-		
 		
 		// Set top bar
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");
@@ -160,7 +155,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
 		// Set charts region
 		west = new JPanel();
-		west.setBorder(new EmptyBorder(20, 40, 20, 20));
+		west.setBorder(new EmptyBorder(20, 70, 20, 20));
 		west.setLayout(new GridLayout(2, 0));
 		
 		getContentPane().add(north, BorderLayout.NORTH);
@@ -227,7 +222,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         else if (e.getSource() == countriesList) {
         	String selected = (String) countriesList.getSelectedItem();
         	if (bannedCountries.contains(selected)) {
-        		errorMsg("This country is unavailable! Please select another country.");
+        		errorMsg("This country is missing data and has been restricted! Please select another country.");
             	allPass = false;
         	}
         	else {
@@ -421,7 +416,34 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 			}
 		}
 		return false;
-		
 	}
 	
+	private static ArrayList<String> initBannedCountries() {
+		ArrayList<String> returnList = new ArrayList<String>();
+		
+		String content = "";
+		try {
+		      File myObj = new File(bannedCountryFile);
+		      Scanner myReader = new Scanner(myObj, "utf-8");
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        content += data + ",";
+		      }
+		      myReader.close();
+		}
+		// display error and terminate program if database error
+		catch (FileNotFoundException e) {
+			JPanel panel = new JPanel();
+			JOptionPane.showMessageDialog(panel, "The restricted country database is corrupted! Application now terminating...", "Fatal error", JOptionPane.WARNING_MESSAGE);
+			System.exit(0);
+		}
+		// loop through the csv and store all country abbreviation combos in the hashmap
+		String[] tempRestrictedCountries = content.split(",");
+		
+		for (int i = 0; i < tempRestrictedCountries.length; i++) {
+			returnList.add(tempRestrictedCountries[i]);
+		}
+		
+		return returnList;
+	}
 }

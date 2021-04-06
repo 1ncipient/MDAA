@@ -1,7 +1,6 @@
 package viewer;
 
 import analysis.AnalysisObject;
-import analysis.ResultObject;
 
 
 /**
