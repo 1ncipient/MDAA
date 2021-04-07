@@ -1,25 +1,59 @@
-# CS2212---Software-Engineering
-This repository contains skeleton code of a Warehouse Management System provided by the course. I and 2 other members in my team utilized design patterns to make the code comply with standards provided by the course.
+# CS2212 - McBal Demographic Analysis Application
 
-## What is the Warehouse Management System about?
+The goal of this project is to implement an application system that enables users to analyze and visualize key data metrics derived from the World Bank’s data repository. Additionally, the system must: a) enable the retrieval of demographic and other data for one selected country from the World Bank’s data repository; b) process the data using different types of analyses; c) render the retrieved data or the processed data using appropriately selected visualization mediums such as bar charts, line graphs, scattered plots, and pie charts. 
 
-The Warehouse Management System (WMS) is a software system that simulates the operations of the warehouse of a simple company that sells goods to clients, and buys products from suppliers. The model of the warehouse of the company is implemented as a database with one table denoting the ID of each product, the name of the product, its stock quantity, and its unit price. Once a specific quantity of product is sold to a customer, this quantity is taken out of the available stock of this product from the corresponding database entry pertaining to this product. If the stock quantity of a product drops below 10 items or an order cannot be fulfilled the product’s state is set as “out of stock” (see packages ca.uwo.model  and ca.uwo.model.item.states for the different states a product can be in). Once a product’s state is “out of stock” then a notification is sent so that a purchase (i.e. restock) action can be triggered and the item be restocked from a supplier. Each product is restocked according to a specific strategy (e.g. a restocking strategy for a product can be 50 units per restock operation, while for another product a different restocking strategy could be used, leading thus to a different restock quantities to be added). In addition to the restocking strategies, the price of an individual product for a given order can be calculated using different strategies (e.g. orders of apples more than 100 units get a 10% discount for this product), and the total price for the whole order (an order may contain many products with different quantities each) is also calculated using different strategies (e.g. orders of total value more than 1,000 dollars get an additional aggregate 5% discount to any other individual discounts applied for each product in this order).
+## Getting Started
 
-## Important
-You must add sqlite jdbc as an external jar to the project
+These instructions will outline how to build and run our submission on your local machine for acceptance testing.
 
-## How to Install the Program
-How to install the program here
-Search up archiving maven project and rebuidling it
+### Prerequisites
 
-"Please be sure to include a README file outlining how to build and run your submission for acceptance testing."
+Please ensure that you have a Java IDE/Launcher which supports the import and export of Maven Projects. Further, please ensure that your machine has a working internet connection as HTTP Get Requests support the data retrieval mechanism of our project. See below for more details.
+* [Eclipse IDE](https://www.eclipse.org/ide/) - Supported Java IDE
+* [Maven](https://maven.apache.org/) - Dependency Management
 
-"Please submit your code as an archive file (full Maven Eclipse Project - not just the java source files) to OWL by April 7, 23:55."
+### Installing
 
-## How to Run the Program
-Run the Driver class (its main) as a java application from Eclipse.
-The system will execute the orders specified in the driver_file 
-Once the system starts printing constantly in the console the message 
-test
+Please note, the steps to import a Maven projects may vary from IDE to IDE. As a general guideline to install our system, please refer to the following instructions:
 
+* Download a copy of the project archive as a zip file
+* Unzip the project zip file
+* In your IDE/Launcher, click File > Import
+* Select Maven > Existing Maven projects
+* Browse for a root directory to import from
+* Select the folder where you decompressed your zip file
+* Select the project titled "/pom.xml Group_40:McBal_Demographic_Analysis_Application:1.0.0-SNAPSHOT:jar"
+
+### Running the Program
+
+After the program has been imported as a Maven project, simply run InitializeProgram.java under the default package. This will handle the execution of the entire application.
+
+To add login accounts to the application, simply edit the Database plain text file following the formatting. A sample account is provided with:
+
+* Username: User
+* Password: Pass
+
+Feel free to explore the user interface and play around with the selections!
+
+## Versioning
+
+For versioning, we use [Bitbucket](https://repo.csd.uwo.ca) hosted on the Computer Science Department at Western's domain. 
+
+## Authors
+
+Group 40 Participants:
+
+* **Henry So**
+* **Jacob Chun**
+* **Samuel Su**
+* **Yan Qing Niu**
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+* Example code for the main GUI and API interactions was provided by Dr. Kostas Kontogiannis and the CS2212B teaching staff. 
+* This project relies on the continual support of [World Bank's Data API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation).
 
