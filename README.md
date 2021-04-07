@@ -12,5 +12,6 @@ You must add sqlite jdbc as an external jar to the project
 Run the Driver class (its main) as a java application from Eclipse.
 The system will execute the orders specified in the driver_file 
 Once the system starts printing constantly in the console the message 
+test
 
 
