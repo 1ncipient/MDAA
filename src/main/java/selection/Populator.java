@@ -81,7 +81,7 @@ public class Populator implements Populate {
     /**
      * An integer array is passed in: The elements (if index has value 1, use this viewer) in the type array will denote which viewers that will be used when Recalculate is pressed by the User in the mainUI. 
      * @param type denotes viewers to create graphical representations of the SelectionObject
-     * @param value 
+     * @param value the integer value denoting selection option number
      */
     public void setSelectionType (int[] type, int value) {
     	select.setViewers(type);

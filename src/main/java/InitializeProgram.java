@@ -13,6 +13,7 @@ public class InitializeProgram {
 	/**
 	 * Main method initializes the McBal Demographic Analysis System
 	 * 
+	 * @param args no additional arguments needed
 	 */
 	public static void main(String[] args) {
 

@@ -26,7 +26,7 @@ public class AnalysisObject implements Calculate{
 	
 	/**
 	 * Setter method for end year in SelectionObject
-	 * @param start New integer for end year in SelectionObject
+	 * @param end New integer for end year in SelectionObject
 	 */
 	public void setEnd(int end) {
 		select.setEnd(end);
@@ -138,7 +138,7 @@ public class AnalysisObject implements Calculate{
 	
 	/**
 	 * Helper method to check if the DataObject array has valid entries
-	 * 
+	 * @param dataArr the DataObject array to be checked for data
 	 * @return true of false indicating whether there exists data
 	 */
 	public static boolean hasData(DataObject[] dataArr) {

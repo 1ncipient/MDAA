@@ -30,7 +30,7 @@ public class SelectionObject {
 	
 	/**
 	 * Setter method for end year
-	 * @param start New integer for end year
+	 * @param end New integer for end year
 	 */
 	public void setEnd(int end) {
 		this.end = end;

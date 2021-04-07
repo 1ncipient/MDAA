@@ -21,6 +21,7 @@ public class DataObject {
 	 * Constructor will initiate the instance variables
 	 * and create a new DataObject
 	 * 
+	 * @param name the name of the DataObject to be initialized
 	 */
 	public DataObject(String name) {
 		this.dataName = name;
@@ -40,7 +41,7 @@ public class DataObject {
 	/**
 	 * Method to set the dataName associated
 	 * 
-	 * @param the objects new dataName to be updated to
+	 * @param name the objects new dataName to be updated to
 	 * 
 	 */
 	public void setDataName(String name) {
@@ -60,7 +61,7 @@ public class DataObject {
 	/**
 	 * Method to set the data of the DataObject
 	 * 
-	 * @param the objects new data HashMap to be updated to
+	 * @param recovered the objects new data HashMap to be updated to
 	 * 
 	 */
 	public void setDataRecovered(HashMap<Integer, Double> recovered) {

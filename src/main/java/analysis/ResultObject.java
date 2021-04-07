@@ -17,8 +17,7 @@ public class ResultObject implements CreateResult {
 	
 	/**
 	 * Parameterized constructor, set instance variables
-	 * @param analysisObj
-	 * @param observer
+	 * @param analysisObj the completed analysis object to be processed
 	 */
 	public ResultObject(AnalysisObject analysisObj) {
 		analysis = analysisObj;
@@ -27,7 +26,7 @@ public class ResultObject implements CreateResult {
 	
 	/**
 	 * Mutator method for resultData; invokes processData, helper method, and calls mutator method setResultData to set instance variable resultData.
-	 * @param analysis
+	 * @param analysis the analysis object to be processed
 	 */
 	public void setResult (AnalysisObject analysis) {
 		processData(analysis);

@@ -31,11 +31,9 @@ public class LoginService extends JFrame implements LoginCreds {
 	private boolean valid;
 
 	/**
-	 * Method initializes the login process when the user presses submit
-	 * 
-	 * @param username the user's supplied username
-	 * @param password the user's supplied password
-	 * 
+	 * Method implements the singleton design pattern
+	 * to return a unique instance
+	 * @return the unique instance of LoginService
 	 */
 	public static LoginService getInstance() {
 	

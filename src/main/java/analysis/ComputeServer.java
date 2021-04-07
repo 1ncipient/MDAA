@@ -15,7 +15,7 @@ public class ComputeServer implements Recalculate{
 	
 	/**
 	 * Parameterized constructor. Sets instance variable create through setter.
-	 * @param create
+	 * @param create a creator object
 	 */
 	public ComputeServer(Creator create) {
 		this.setCreator(create);

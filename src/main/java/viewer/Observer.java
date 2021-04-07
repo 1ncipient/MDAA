@@ -26,7 +26,7 @@ public class Observer implements SendUpdate {
 	
 	/**
 	 * Setter method for analysis.
-	 * @param result New AnalysisObject for current object
+	 * @param analysis New AnalysisObject for current object
 	 */
 	public void setAnalysis(AnalysisObject analysis) {
 		this.analysis = analysis;
@@ -50,7 +50,7 @@ public class Observer implements SendUpdate {
 	
 	/**
 	 * Setter method for status flag.
-	 * @param result The new status.
+	 * @param status The new status.
 	 */
 	public void setStatus(boolean status) {
 		this.status = status;
