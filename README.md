@@ -35,10 +35,6 @@ To add login accounts to the application, simply edit the Database plain text fi
 
 Feel free to explore the user interface and play around with the selections!
 
-## Versioning
-
-For versioning, we use [Bitbucket](https://repo.csd.uwo.ca) hosted on the Computer Science Department at Western's domain. 
-
 ## Authors
 
 Group 40 Participants:
