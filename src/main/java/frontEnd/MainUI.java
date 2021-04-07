@@ -439,7 +439,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		// loop through the csv and store all country abbreviation combos in the hashmap
 		String[] tempcountryMap = content.split(",");
 		
-		for (int i = 0; i < tempcountryMap.length; i += 2) {
+		for (int i = 2; i < tempcountryMap.length; i += 2) {
 			returnList.put(tempcountryMap[i], tempcountryMap[i+1].toLowerCase());
 		}
 		
