@@ -11,7 +11,9 @@ You must add sqlite jdbc as an external jar to the project
 ## How to Install the Program
 How to install the program here
 Search up archiving maven project and rebuidling it
+
 "Please be sure to include a README file outlining how to build and run your submission for acceptance testing."
+
 "Please submit your code as an archive file (full Maven Eclipse Project - not just the java source files) to OWL by April 7, 23:55."
 
 ## How to Run the Program
