@@ -46,7 +46,7 @@ public class LoginService extends JFrame implements LoginCreds {
 	
 	}
 
-	/**
+	/*
 	 * Constructor of the class will initialize the GUI and begin
 	 * the login process
 	 * 

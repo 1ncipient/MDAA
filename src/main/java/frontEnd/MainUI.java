@@ -23,6 +23,11 @@ import javax.swing.border.EmptyBorder;
 
 import selection.Populator;
 
+/**
+ * This class represents the Main Interface that the enduser will be interacting with.
+ * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
+ *
+ */
 public class MainUI extends JFrame implements Launch, ActionListener{
 
      // instance variables
@@ -30,6 +35,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 	
 	public static JPanel west;
 	
+	//interactive components
     private JComboBox<String> countriesList;
     private JComboBox<String> fromList;
     private JComboBox<String> toList;
@@ -41,6 +47,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
     private JButton recalculate;
     private JButton addView;
     private JButton removeView;
+    
     private int[] startYears;
     private int[] endYears;
     private int[] viewerList;
@@ -74,6 +81,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		countryMap = loadcountryMap();
 		
 		// Set top bar
+		//creating country dropdown menu
 		JLabel chooseCountryLabel = new JLabel("Choose a country: ");
 		countriesNames = new Vector<String>();
 		for (String name: countryMap.keySet()) {
@@ -84,17 +92,20 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
         countriesList.addActionListener(this);
 
+        //creating years dropdown menu
 		JLabel from = new JLabel("From");
 		JLabel to = new JLabel("To");
 		Vector<String> years = new Vector<String>();
 		for (int i = 2021; i >= 1962; i--) {
 			years.add("" + i);
 		}
+		// add actionListeners to each interactive part of our mainUI
 		fromList = new JComboBox<String>(years);
 		toList = new JComboBox<String>(years);
         fromList.addActionListener(this);
         toList.addActionListener(this);
         
+        //upper part of the application window
 		JPanel north = new JPanel();
 		north.add(chooseCountryLabel);
 		north.add(countriesList);
@@ -109,6 +120,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 
 		JLabel viewsLabel = new JLabel("Available Views: ");
 
+		// creating views dropdown menu
 		viewsNames = new Vector<String>();
 		viewsNames.add("Pie Chart");
 		viewsNames.add("Line Chart");
@@ -136,11 +148,13 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		methodsNames.add("Healthcare Expenditure per Capita (current US$) vs Infant Mortality Rate (per 1000)");
         methodsNames.add("Government Education Expenditure (% of GDP) vs Health Expenditure (% of GDP)");
 
+        //analysis dropdown menu
 		methodsList = new JComboBox<String>(methodsNames);
 
         methodsList.addActionListener(this);
         previousAnalysis = (String) methodsList.getSelectedItem();
 
+        //bottom part of application window
 		JPanel south = new JPanel();
 		south.add(viewsLabel);
 		south.add(viewsList);
@@ -164,6 +178,9 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		getContentPane().add(west, BorderLayout.WEST);
 	}
 
+	/**
+	 * This method launches the main user interface - setting the peripherals of the application window to allow it to become visible.
+	 */
 	public void launchMainUI() {
 		frame = this;
 		
@@ -179,8 +196,12 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Action listener - based on user's interaction with the different interactive components in the mainUI (start year, end year, viewers, country, analysis, recalculate button)
+	 * @param e utilized to return the interactive button or dropdown menu that the user clicks on
+	 */
 	public void actionPerformed(ActionEvent e) {
-        //get selected item
+        //get selected item - if user selects from the startYear dropdown menu
         if (e.getSource() == fromList){
             int selected = Integer.parseInt((String) fromList.getSelectedItem());
             String analysisSelected = (String) methodsList.getSelectedItem();
@@ -195,7 +216,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             }
         }
         
-        //get selected item
+        //get selected item - if user selects from the startYear dropdown menu
         else if (e.getSource() == toList) {
         	int selected = Integer.parseInt((String) toList.getSelectedItem());
             String analysisSelected = (String) methodsList.getSelectedItem();
@@ -209,7 +230,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
             	populator.setSelectionType("endYr", selected);
             }
         }
-        
+        // get selected item - if user selects from the analysis dropdown menu
         else if(e.getSource() == methodsList) {
         	if (!((String) methodsList.getSelectedItem()).equals(previousAnalysis)) {
         		Arrays.fill(viewerList, 0);
@@ -218,7 +239,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         	}
         	populator.setSelectionType((String) methodsList.getSelectedItem(), 10);
         }
-        
+        // get selected item - if user selects from the country dropdown menu
         else if (e.getSource() == countriesList) {
         	String selected = (String) countriesList.getSelectedItem();
         	if (bannedCountries.contains(selected)) {
@@ -359,11 +380,22 @@ public class MainUI extends JFrame implements Launch, ActionListener{
         }
 	}
 	
+	/*
+	 * Helper method - invokes an error message that pops up on the enduser's desktop.
+	 * @param string that user sees when an error occurs.
+	 */
 	private void errorMsg(String errorStr) {
 		JOptionPane.showMessageDialog(this, errorStr);
 	}
 	
+	/*
+	 * Helper method - checks to see if the user wishes to add a viewer, and sets the according index (the viewer the user has chosen) to 1
+	 * If remove viewer, sets appropriate index to 0.
+	 * @param index denotes the viewer to add or remove
+	 * @param type denotes whether to add or remove the viewer
+	 */
 	private boolean checkViewer(int index, String type) {
+		// add viewer
 		if (type.equals("add")) {
 			if (viewerList[index] == 0) {
 				viewerList[index] = 1;
@@ -371,6 +403,7 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 			}
 			return false;	
 		}
+		//remove viewer
 		else {
 			if (viewerList[index] == 0) {
 				return false;
@@ -380,10 +413,14 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		}
 	}
 	
+	/*
+	 * Static Helper method. Returns a TreeMap of <String,String>. Based on the country file, this method reads each line in the country file to obtain all the countries in the country file.
+	 */
 	private static TreeMap<String, String> loadcountryMap() {
 		TreeMap<String, String> returnList = new TreeMap<String, String>();
 		
 		String content = "";
+		// read file
 		try {
 		      File myObj = new File(countryFile);
 		      Scanner myReader = new Scanner(myObj, "utf-8");
@@ -409,6 +446,11 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		return returnList;
 	}
 	
+	/*
+	 * Static Helper method - checks whether or not if the supplied array contains a value in which there is an element that equates to 1.
+	 * @param suppliedArr the array in question
+	 * @param value
+	 */
 	private static boolean contains(int[] suppliedArr, int value) {
 		for (int i = 0; i< suppliedArr.length; i++) {
 			if (suppliedArr[i] == 1) {
@@ -418,6 +460,9 @@ public class MainUI extends JFrame implements Launch, ActionListener{
 		return false;
 	}
 	
+	/*
+	 * Static helper method. Returns an ArrayList<String> of the banned countries based off of the bannedCountryFile.
+	 */
 	private static ArrayList<String> initBannedCountries() {
 		ArrayList<String> returnList = new ArrayList<String>();
 		
