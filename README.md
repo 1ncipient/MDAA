@@ -8,7 +8,13 @@ The Warehouse Management System (WMS) is a software system that simulates the op
 ## Important
 You must add sqlite jdbc as an external jar to the project
 
-## How to Run the System 
+## How to Install the Program
+How to install the program here
+Search up archiving maven project and rebuidling it
+"Please be sure to include a README file outlining how to build and run your submission for acceptance testing."
+"Please submit your code as an archive file (full Maven Eclipse Project - not just the java source files) to OWL by April 7, 23:55."
+
+## How to Run the Program
 Run the Driver class (its main) as a java application from Eclipse.
 The system will execute the orders specified in the driver_file 
 Once the system starts printing constantly in the console the message 
