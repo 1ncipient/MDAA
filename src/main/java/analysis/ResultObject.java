@@ -10,7 +10,7 @@ import viewer.Observer;
  * @author Henry So, Jacob Chun, Samuel Su, Yan Qing Niu
  *
  */
-public class ResultObject {
+public class ResultObject implements CreateResult {
 	//instance variables
 	private AnalysisObject analysis;
 	private Observer observers;
@@ -51,7 +51,7 @@ public class ResultObject {
 		this.analysis = analysis;
 	}
 	
-	/**
+	/*
 	 * Helper method; parses data and formats it so to create an array that contains all vital information that the Observer needs.
 	 * @param analysis parameter pulls information utilizing accessor methods and sets to respective elements in the array.
 	 * @return
@@ -134,14 +134,14 @@ public class ResultObject {
         }
 	}
 	
-	/**
+	/*
 	 * Helper method; invokes observers.update(), lets Observer know that processes are complete and ready to update.
 	 */
 	private void notifyObserver() {
 		observers.update();
 	}
 	
-	/**
+	/*
 	 * Helper method. Sets observer.
 	 * @param observers
 	 */
