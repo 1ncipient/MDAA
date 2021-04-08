@@ -18,7 +18,7 @@ public class InitializeProgram {
 	public static void main(String[] args) {
 
 		JFrame frame = LoginService.getInstance();
-		frame.setSize(335, 120);
+		frame.setSize(350, 140);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
